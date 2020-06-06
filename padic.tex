@@ -1,0 +1,1527 @@
+In the following section, let $p \in \Z$, $0 < p$ be a prime. 
+
+\subsection{$\Z_p$ and $\Q_p$}
+
+\begin{dfn}[Projective System]\link{dfn:proj_sys}
+  
+  Let $\N$ be the naturals viewed as a category with the usual ordering. 
+  Let $\CC$ be a category. 
+  Then a \emph{projective system in $\CC$} is a contravariant functor 
+  from $\N$ to $\CC$. 
+  For a projective system $F$, 
+  we will denote the image of the morphism $k \leq l$ with $\fall{k}{l}$. 
+
+  Equivalently, 
+  a projective system in $\CC$ is 
+  a collection of objects $(F_n)_{n\in\N}$ in $\CC$ together with
+  a collection of maps $(\fall{n}{n+1} : \map{F_{n+1}}{F_n}{}{})_{n\in \N}$
+  such that for all $n \in \N$, $\fall{n}{n+1}\fall{n+1}{n+2} = \fall{n}{n+2}$.
+\end{dfn}
+
+\begin{dfn}[Inverse Limit of a Projective System]\link{dfn:inv_lim}
+  
+  Let $\CC$ be a category and $F : \map{\N\op}{\CC}{}{}$ be a projective system.
+  Then an \emph{inverse limit of $F$} is just 
+  a limit of $F$ as an $\N\op$-diagram.
+\end{dfn}
+
+\begin{dfn}[$p$-adic Integers]\link{dfn:padic}
+  
+  Define the following projective system of commutative rings, 
+  $\Z/p^\star\Z$ by : 
+  \begin{enumerate}
+    \item $n \in \obj{\N\op} \mapsto \Z/p^n\Z$
+    \item For $n \in \N\op$, $\fall{n}{n+1} : \map{\Z/p^{n+1}\Z}{\Z/p^n\Z}{}{}$
+    is the natural projection (from the universal property of $\Z/p^{n+1}\Z$). 
+  \end{enumerate}
+  Then the \emph{$p$-adic integers} $\Z_p$ is defined as 
+  the inverse limit of $\Z/p^\star\Z$. 
+  For $n \in \N$, $\ep_n : \map{\Z_p}{\Z/p^n\Z}{}{}$ will denote the 
+  projection that comes with the definition of $\Z_p$ as a limit. 
+
+  We have an explicit construction of $\Z_p$ as 
+  the subset of $x \in \dprod{n\in\N}{} \Z/p^n\Z$ such that 
+  for all $n \in \N$, $\fall{n}{n+1}\ep_{n+1}(x) = \ep_n(x)$.
+\end{dfn}
+
+\begin{rmk}[Meaning of $p$-adic integers]\link{rmk:padic}
+  
+  One should think of $p$-adic integers along the following analogy with 
+  complex analysis : 
+  \begin{enumerate}
+    \item $\Z$ is the ring of holomorphic functions on a space,
+    the space being the set of primes of $\Z$. 
+    \item A prime $p$ is a point. 
+    \item Taking an integer $f$ to $\Z/p\Z$ is evaluation of 
+    the function $f$ at the point $p$. 
+    \item Sending an integer $f$ to $\Z/p^n\Z$ is 
+    the taylor expansion of $f$ at $p$
+    up to terms of order $n$.
+    You can write $f$ in $\Z/p^n\Z$ as a polynomial in $1,p,\dots,p^{n-1}$
+    with coefficients in $\set{0,\dots,p-1}$. 
+    \item Elements of $\Z_p$ are precisely 
+    coherent collections of taylor expansions of higher and higher order,
+    i.e. power series in $p$. 
+    This is formalized \linkto{prop:padic:top_prop}{later}.
+  \end{enumerate}
+\end{rmk}
+
+\begin{prop}[$\Z$ injects into $\Z_p$]\link{prop:padic:inject}
+  
+  The canonical ring morphism $\map{\Z}{\Z_p}{}{}$ has kernel 
+  $\bigcap_{n \in \N} p^n\Z = 0$.
+\end{prop}
+\begin{proof}
+  
+  Clear from the construction of $\Z_p$. 
+\end{proof}
+\begin{proof}
+  
+  We have a short exact sequence of projective systems in $\MOD[\Z]$, 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      0 \arrow[r] & p^\star\Z \arrow[r] 
+      & \underline{\Z} \arrow[r] & \Z/p^\star\Z \arrow[r] & 0
+    \end{tikzcd}
+  \end{figure}
+  where the middle projective system is a constant at $\Z$. 
+  Since limits commute with limits, 
+  taking the inverse limit is left exact and we obtain : 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      0 \arrow[r] & \LIM{n\in\N} p^n\Z \arrow[r] 
+      & \Z \arrow[r] & \LIM{n \in \N} \Z/p^n\Z
+    \end{tikzcd}
+  \end{figure}
+  The inverse limit of $\Z/p^\star\Z$ in $\MOD[\Z]$ is still $\Z_p$. 
+  (This follows elementarily, or from the fact that 
+  the forgetful functor from $\CRING$ to $\MOD[\Z]$ is a right adjoint,
+  and hence it preserves limits.)
+  And the inverse limit of $p^\star\Z$ is the intersection. 
+\end{proof}
+
+\begin{prop}[Truncation]\link{prop:padic:truncation}
+  
+  Let $n \in \N$. 
+  Then we have the following short exact sequence in $\MOD[\Z]$ : 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      0 \arrow[r] & 
+      \Z_p \arrow[r,"p^n"] & 
+      \Z_p \arrow[r,"\ep_n"] & 
+      \Z/p^n\Z \arrow[r] & 
+      0
+    \end{tikzcd}
+  \end{figure}
+\end{prop}
+\begin{proof}
+  \textit{(Exactness at left)}
+  It suffices to show that multiplying by $p$ is an injection,
+  i.e. you can cancel by $p$. 
+  Let $x \in \Z_p$ such that $p x = 0$. 
+  Then for $k \in \N$, $0 = \ep_{k+1}(p x) = p \ep_{k+1}(x)$ implies 
+  the existence of a $x_{k+1} \in \Z$ such that 
+  $x_{k+1} = \ep_{k+1}(x)$ in $\Z/p^{k+1}\Z$ and 
+  $p^{k+1} \mid p x_{k+1}$. 
+  Then $p^k \mid x_{k+1}$, so 
+  $\ep_k(x) = \fall{k}{k+1} \ep_{k+1}(x) = \fall{k}{k+1} x_{k+1} = 0$. 
+  Therefore $\ep_k(x) = 0$ for all $k \in \N$, i.e. $x = 0$. 
+
+  \textit{(Exactness at right)} $\ep_n$ is surjective. 
+
+  \textit{(Exactness in middle)} Clearly, $p^n\Z_p \subs \ker \ep_n$. 
+  Let $x \in \ker \ep_n$.
+  In the following, for $k \in \N$, 
+  let $\pi_k : \map{\Z}{\Z/p^k\Z}{}{}$ be the natural projection. 
+  For $k \in \N$, let $x_k$ be the unique integer in $\set{0,\dots,p^k-1}$ 
+  such that $\pi_k(x_k) = \ep_k(x)$ in $\Z/p^k\Z$. 
+  Then $\ep_n(x) = 0$ implies for all $k \in \N$, 
+  \[ \pi_n (x_{n+k}) = \fall{n}{n+k} \pi_{n+k}(x_{n+k}) 
+  = \fall{n}{n+k} \ep_{n+k}(x) = \ep_n(x) = 0 \] 
+  that is to say $p^n \mid x_{n+k}$. 
+  Since $0 \leq x_{n+k} < p^{n+k}$, 
+  there exists a unique $0 \leq y_k < p^k$ such that 
+  $x_{n+k} = p^n y_k$ in $\Z$. 
+  Let $y \in \dprod{n \in \N}{} \Z/p^n\Z$ such that for all $k \in\N$, 
+  $\ep_k(y) = \pi_k(y_k)$. 
+  Then for $k \in \N$, 
+  $\pi_{n+k}(x_{n+k+1}) = \fall{n+k}{n+k+1}\ep_{n+k+1}(x) 
+  = \ep_{n+k}(x) = \pi_{n+k}(x_{n+k})$
+  implies $p^{n+k} \mid x_{n+k+1} - x_{n+k} = p^n(y^{k+1} - y^k)$,
+  and therefore $p^k \mid y^{k+1} - y^k$.
+  Hence $y \in \Z_p$. 
+  Then for $k \in \N$, 
+  \[
+    \ep_k(p^n y) = \pi_k(p^n y_k) = \fall{k}{n+k}\pi_{n+k}(p^n y_k)
+    = \fall{k}{n+k} \pi_{n+k}(x_{n+k}) = \fall{k}{n+k} \ep_{n+k}(x)
+    = \ep_k(x)
+  \]
+  Therefore, $x = p^n y \in p^n \Z_p$.
+\end{proof}
+\begin{proof}(Generalized from nLab)
+
+  Consider the following short exact sequence 
+  of projective systems in $\MOD[\Z]$ : 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      & \vdots \arrow[d] & \vdots \arrow[d] & \vdots \arrow[d] & \\
+      0 \arrow[r] & \Z/p^2\Z \arrow[d]\arrow[r,"p^n"] 
+        & \Z/p^{n+2}\Z \arrow[d]\arrow[r] & \Z/p^n\Z \arrow[d]\arrow[r] & 0 \\
+      0 \arrow[r] & \Z/p\Z \arrow[d]\arrow[r,"p^n"] 
+        & \Z/p^{n+1}\Z \arrow[d]\arrow[r] & \Z/p^n\Z \arrow[d]\arrow[r] & 0 \\
+      0 \arrow[r] & 0 \arrow[d]\arrow[r] 
+        & \Z/p^n\Z \arrow[d]\arrow[r] & \Z/p^n\Z \arrow[d]\arrow[r] & 0 \\
+      0 \arrow[r] & 0 \arrow[d]\arrow[r] & \Z/p^{n-1}\Z \arrow[d]\arrow[r] 
+        & \Z/p^{n-1}\Z \arrow[d]\arrow[r]& 0 \\
+      & \vdots \arrow[d] & \vdots \arrow[d] & \vdots \arrow[d] & \\
+      0 \arrow[r] & 0 \arrow[d]\arrow[r] & \Z/p\Z \arrow[d]\arrow[r]
+        & \Z/p\Z \arrow[d]\arrow[r] & 0 \\
+      0 \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & 0 \arrow[r] & 0
+    \end{tikzcd}
+  \end{figure}
+  Since the left system is surjective, 
+  by taking inverse limits we obtain 
+  the desired short exact sequence in $\MOD[\Z]$ : 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      0 \arrow[r] & 
+      \Z_p \arrow[r,"p^n"] & 
+      \Z_p \arrow[r,"\ep_n"] & 
+      \Z/p^n\Z \arrow[r] & 
+      0
+    \end{tikzcd}
+  \end{figure}
+\end{proof}
+
+\begin{rmk}[Meaning of Truncation]\link{rmk:truncation}
+  
+  $\ep_n$ is precisely truncating a power series at 
+  terms of order $n$ and higher.
+  Then the theorem says the power series that are zero up to terms order $n$
+  are precisely the ones consisting of terms of order $n$ and higher. 
+\end{rmk}
+
+\begin{prop}[$\Z_p$ Local Ring]\link{prop:padic:local}
+  
+  For $n \geq 1$, $\Z/p^n\Z$ is a local ring with maximal ideal $p\Z/p^n\Z$. 
+  Hence $\Z_p$ is a local ring with maximal ideal $p\Z_p$. 
+\end{prop}
+\begin{proof}(Serre's)
+
+  Let $n \geq 1$. 
+  It suffices to show that $\Z/p^n\Z \minus p\Z/p^n\Z \subs \Z/p^n\Z^\times$. 
+  Let $x \in \Z/p^n\Z$ be not divisible by $p$. 
+  Then there exists $y \in \Z/p^n\Z$ such that $\fall{1}{n} (x y) = 1$.
+  Let $0 \leq x_n, y_n < p^n$ be representatives of $x, y$ in $\Z$. 
+  Then there exists $z_n \in \Z$ such that $x_n y_n = 1 - p z_n$. 
+  Let $\pi_n : \map{\Z}{\Z/p^n\Z}{}{}$ be the natural projection and 
+  $z := \pi_n(z_n)$. 
+  Then we have \[
+    x y (1 + p z + \cdots + (pz)^{n-1})
+    = \pi_n((1 - p z_n)(1 + p z + \cdots + (pz)^{n-1}))
+    = \pi_n(1 - (p z_n)^n)
+    = 1 
+  \]
+  Thus $x$ is a unit. 
+
+  To show $\Z_p$ is a local ring with maximal ideal $p\Z_p$, 
+  it again suffices that $\Z_p\minus p\Z_p \subs \Z_p^\times$. 
+  Let $x \in \Z_p\minus p\Z_p$. 
+  Then for all $n \geq 1$, $0 \neq \ep_1(x) = \fall{1}{n}\ep_n(x)$. 
+  Since $\fall{1}{n} : (\Z/p^n\Z) / (p\Z/p^n\Z) \iso \Z/p\Z$ as rings, 
+  $\ep_n(x) \in \Z/p^n\Z^\times$ by the above. 
+  Let $y_n = \ep_n(x)\inv$. 
+  Then uniqueness of inverses implies $\fall{n}{n+1} y_{n+1} = y_n$,
+  i.e. there exists a unique $y \in \Z_p$ such that 
+  for all $n$, $\ep_n(y) = y_n$.
+  Then $x y = 1$, i.e. $x \in \Z_p^\times$. 
+\end{proof}
+\begin{proof}(via geometric series)
+
+  We show $\Z_p$ is local directly. 
+  Since $p\Z_p = \ker \ep_1$ which is a maximal ideal in $\Z_p$, 
+  it suffices that $p\Z_p$ is the Jacobson radical of $\Z_p$,
+  equivalently $1 - p\Z_p \subs \Z_p^\times$. 
+
+  Let $x \in p\Z_p$. 
+  All we need to do is justify $1/(1 - x) = \dsum{k = 0}{\infty} x^k$
+  is an element in $\Z_p$. 
+  For $k \in \N$, define $y_k := \dsum{0 \leq l < k}{} \ep_k(x^l) \in \Z/p^k\Z$
+  and let $y$ be the unique element in $\dprod{n \in \N}{}\Z/p^n\Z$ such that 
+  for all $k \in \N$, $\ep_k(y) = y_k$. 
+  Then $x \in p\Z_p$ implies $x^k \in p^k\Z_p = \ker \ep_k$, 
+  which shows that $y \in \Z_p$ and is the desired inverse of $1 - x$. 
+\end{proof}
+
+\begin{rmk}[Why $\Z_p$ is a Local Ring]\link{rmk:padic:local}
+ 
+  This is the analogue of the fact that a power series is invertible 
+  if and only if its constant coefficient is invertible. 
+\end{rmk}
+
+\begin{dfn}[Naturals with Infinity]\link{dfn:nat_infty}
+  
+  Let $\N^\infty := \N \sqcup \set{\infty}$.
+  Define $\leq$ on $\N^\infty$ as follows : 
+  \begin{itemize}
+    \item For all $n, m \in \N^\infty\minus\set{\infty}$, 
+    $n \leq m$ is as usual. 
+    \item For all $n \in \N^\infty$, $n \leq \infty$. 
+  \end{itemize}
+
+  Define $+$ on $\N$ as follows : 
+  \begin{itemize}
+    \item For $n, m \in \N^\infty\minus\set{\infty}$, $n + m$ is as usual. 
+    \item For $n \in \N^\infty$, $n + \infty = \infty$. 
+  \end{itemize}
+\end{dfn}
+
+\begin{dfn}[$p$-adic Valuation, Norm]\link{dfn:padic:val}
+  
+  The \emph{$p$-adic valuation} is defined as the following : 
+  \begin{align*}
+    v_p : \map{\Z_p}{\N^\infty}{}{}, 
+    x \mapsto \sup\set{n \in \N^\infty \st \ep_n(x) = 0}
+  \end{align*}
+
+  From this, we define the \emph{$p$-adic norm}, 
+  \begin{align*}
+    \abs{\star}_p : \map{\Z_p}{[0,\infty)\subs \R}{}{}, 
+    x \mapsto \begin{cases}
+      p^{-v_p(x)} &,\, x \neq 0 \\
+      0 &,\, x = 0
+    \end{cases}
+  \end{align*}
+\end{dfn}
+
+\begin{rmk}[Meaning of $p$-adic Norm]\link{rmk:padic:norm}
+  
+  Continuing the \linkto{rmk:padic}{analogy},
+  $\abs{\star}_p$ formalizes the idea that 
+  higher order terms are smaller and in the limit, zero. 
+\end{rmk}
+
+\begin{prop}[Unique Decomposition in $\Z_p$]\link{prop:padic:decomp}
+  
+  Let $x \in \Z_p$, $x \neq 0$. 
+  Then \begin{enumerate}
+    \item $v_p(x) \neq \infty$. 
+    \item Since by definition, $\ep_{v_p(x)}(x) = 0$ and 
+    multiplying by $p^{v_p(x)}$ is injective, 
+    there exists a unique $u(x) \in \Z_p$ such that $x = p^{v_p(x)}u(x)$.
+    Then $u(x) \in \Z_p^\times$
+    \item For all $n \in \N$ and $u \in \Z_p^\times$, 
+    $x = p^n u$ implies $n = v_p(x)$ and $u = u(x)$
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+
+  $(1)$ For $n \in \N$, $\ep_n(x) = 0$ implies for all $k \leq n$, 
+  $\ep_k(x) = 0$. 
+  Since $x \neq 0$, this implies the set of $n$ such that 
+  $\ep_n(x) = 0$ is bounded above by a natural $N \in \N$. 
+  Hence $v_p(x) \leq N < \infty$. 
+  
+  $(2)$ Since \linkto{prop:padic:local}{$\Z_p$ is a local ring} with 
+  maximal ideal $p\Z_p$, it suffices to show that 
+  $u(x) \notin p\Z_p = \ker\ep_1$. 
+  Well, if $u(x) \in p\Z_p$, then $x \in p^{v_p(x)}+1\Z_p$, 
+  which implies $\ep_{v_p(x) + 1}(x) = 0$, 
+  contradicting the maximality of $v_p(x)$. 
+
+  $(3)$ Let $n \in \N$, $u \in \Z_p^\times$ such that $x = p^n u$. 
+  Already, $x \in p^n\Z_p$ implies $n \leq v_p(x)$ by 
+  \linkto{dfn:padic:val}{definition of $v_p(x)$}. 
+  Then $u \in p^{v_p(x) - n}\Z_p$ and $u \in \Z_p^\times$
+  implies $v_p(x) = n$. 
+  Then $u = u(x)$ since multiplying by $p^{v_p(x)}$ is 
+  \linkto{prop:padic:truncation}{injective}. 
+\end{proof}
+
+\begin{prop}[$(\Z_p,\abs{\star}_p)$ Normed Ring]\link{prop:padic:normed_ring}
+  
+  The following are true : 
+  \begin{enumerate}
+    \item (Positive Definite) 
+    For all $x \in \Z_p$, $\abs{x}_p = 0$ if and only if $x = 0$. 
+    \item (Ultrametric Property) 
+    For all $x, y \in \Z_p$, 
+    $\abs{x + y}_p \leq \max(\abs{x}_p,\abs{y}_p)$. 
+    \item (Multiplcative)
+    For $x, y \in \Z_p$, 
+    $\abs{x y}_p = \abs{x}_p \abs{y}_p$. 
+    \item (Normalized)
+    $\abs{1}_p = 1$
+  \end{enumerate}
+  Hence $\Z_p$ is a topological ring with the topology from $\abs{\star}_p$. 
+\end{prop}
+\begin{proof}~
+  
+  $(1)$ Clear. 
+
+  $(2)$ It suffices to show $\min(v_p(x),v_p(y)) \leq v_p(x + y)$. 
+  Let $n = \min(v_p(x),v_p(y))$. 
+  Then $\ep_n(x + y) = \ep_n(x) + \ep_n(y) = 0$.
+  So $n \leq v_p(x + y)$ by its maximality. 
+
+  $(3)$ It suffices to show $v_p(x y) = v_p(x) + v_p(y)$. 
+  This follows from the result on 
+  \linkto{prop:padic:decomp}{unique decomposition}.
+
+  $(4)$ $v_p(1) = 0$ since $1$ is a unit. 
+\end{proof}
+
+\begin{prop}[$\Z_p$ Integral Domain]\link{prop:padic:ID}
+  
+  For all $x, y \in \Z_p$, $x y = 0$ implies $x = 0$ or $y = 0$. 
+\end{prop}
+\begin{proof}
+  Follows from the norm being \linkto{prop:padic:normed_ring}{multipicative}
+  and $\R$ being an integral domain. 
+\end{proof}
+\begin{proof}(Without using the norm)
+
+  Let $x, y \in \Z_p$, $x \neq 0 \neq y$. 
+  Then $x y = p^{v_p(x) + v_p(y)} u(x) u(y)$ from 
+  \linkto{prop:padic:decomp}{unique decomposition}. 
+  Then $x y = 0$ yields $0 = p^{v_p(x) + v_p(y)}$, 
+  which implies $\Z$ does not \linkto{prop:padic:inject}{inject} into $\Z_p$,
+  a contradiction. 
+\end{proof}
+
+\begin{prop}[Ultrametric Property]\link{prop:padic:ultrametric}
+  
+  Let $(X,d)$ be a metric space with 
+  $d$ satisfying the \emph{ultrametric property} : 
+  for all $x, y, z \in X$, $d(x,z) \leq \max(d(x,y),d(y,z))$.
+  Then for all sequences $a : \N \to X$, 
+  $a_n$ is cauchy if and only if $\lim_{n\to\infty} d(a_n,a_{n+1}) = 0$.
+\end{prop}
+\begin{proof}
+  Elementary. 
+\end{proof}
+
+\begin{prop}[Topological Properties of $\Z_p$]\link{prop:padic:top_prop}
+
+  The following are true : 
+  \begin{enumerate}
+    \item (Topology) 
+    For each $x \in \Z_p$, 
+    the set of balls $\set{B_{p^{-n}(x)}}_{n \in \N}$ is 
+    a prefilter that generates the neighbourhood filter of $x$
+    under the subspace topology of $\Z_p$ in $\dprod{n \in \N}{}\Z/p^n\Z$ with 
+    the product topology from each $\Z/p^n\Z$ being discrete. 
+    That is to say, the topology from the norm is equal to 
+    the topology from the construction of $\Z_p$. 
+    \item (Completeness)
+    $\Z_p$ is compact.
+    Hence a complete metric space under $\abs{\star}_p$. 
+    \item (Density of $\Z$ in $\Z_p$)
+    For each $x \in \Z_p$, 
+    there exists unique $a : \N \to \set{0,\dots,p-1}$ such that 
+    $x = \dsum{k = 0}{\infty} a_k p^k$.
+    Furthermore, for all $a : \N \to \set{0, \dots, p-1}$, 
+    $\dsum{k = 0}{\infty} a_k p^k$ is convergent in $\Z_p$. 
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+
+  $(1)$ Let $x \in \Z_p$. 
+  By the definition of product topology, 
+  the neighbourhood filter of $x$ is generated by 
+  the set of preimages of open neighbourhoods of $\ep_n(x)$, 
+  where $n$ ranges over $\N$. 
+  Since the $\Z/p^n\Z$ are all discrete, 
+  the neighbourhood filter of $x$ is generated by the smaller set of 
+  $\set{\ep_n\inv(\ep_n(x))}_{n \in \N} = \set{x + p^n\Z_p}_{n\in\N}
+  = \set{B_{p^{-n+1}}(x)}_{n\in\N}$,
+  hence the result.
+  
+  $(2)$ Define $C : \N \to 2^{\dprod{n\in\N}{}\zmo{n}}$
+  by mapping $n \in \N$ to the set of elements $x$ such that 
+  $\fall{n}{n+1}\ep_{n+1}(x) = \ep_n(x)$.
+  Then $\Z_p = \bigcap_{n \in \N} C_n$. 
+  Since $\dprod{n \in \N}{}\Z/p^n\Z$ is compact by Tychonoff's theorem
+  and closed in compact implies compact, it suffices to show that
+  each $C_n$ is closed. 
+  We can describe $C_n$ explicitly as 
+  \[
+    C_n = \bigcup_{y \in \zmo{n}} 
+    \bigcup_{z \in \brkt{\fall{n}{n+1}}\inv y} \ep_n\inv y \cap \ep_{n+1}\inv z
+  \]
+  Since every $\zmo{n}$ is discrete,
+  this is a finite union of closed sets and hence is closed. 
+
+  $(3)$ In the following, let $\pi_k : \Z \to \Z/p^k\Z$ be the natural map. 
+  Let $x \in \Z_p$. 
+  For $k \in \N$, let $x_k \in \Z$ be unique such that 
+  $\pi_k(x_k) = \ep_k(x)$ and $0 \leq x_k < p^k$. 
+  There exists a unique $a^{(k)} : \N \to \set{0,\dots,p-1}$ such that 
+  $x_k = \dsum{l\in\N}{} a^{(k)}_l p^l$. 
+  Since $\pi_k(x_{k+1} - a^{(k+1)}(k) p^k) = \pi_k(x_{k+1})
+  = \fall{k}{k+1}\ep_{k+1}(x) = \ep_k(x) = x_k$
+  and $0 \leq x_{k+1} - a^{(k+1)}(k) p^k < p^k$,
+  we have $x_{k+1} = x_k + a^{(k+1)}(k) p^k$.
+  Therefore $a : \N \to \set{0,\dots,p-1}, k \mapsto a^{(k)}(k)$. 
+  The claim that $x = \dsum{k = 0}{\infty} a_k p^k$
+  is equivalent to $x = \lim_{k \to \infty} x_k$. 
+  Since the neighourhood filter of $x$ is generated by $B_{p^{-n}}(x)$,
+  it suffices $x_k$ converges into each of these balls. 
+  Let $n \in \N$. 
+  Then for $k \geq n + 1$, 
+  $\ep_{n+1}(x_k - x) = \fall{n+1}{k}\ep_k(x_k - x) = 0$.
+  Therefore $n < v_p(x_k - x)$, i.e. $x_k \in B_{p^{-n}}(x)$.
+  Hence, $x_k \to x$. 
+
+  Let $b : \N \to \set{0,\dots,p-1}$ such that 
+  $x = \dsum{k = 0}{\infty} b_kp^k$.
+  Then $\pi_1(a_0) = \ep_1(x) = \pi_1(b_0)$.
+  Since $0 \leq a_0,b_0 < p$, $a_0 = b_0$. 
+  For $k \in \N$, 
+  $\pi_{k+1}(a_{k}p^{k}) = \ep_{k+1}(x - \dsum{0 \leq l < k}{}a_lp^l)
+  = \ep_{k+1}(x - \dsum{0 \leq l < k}{}b_lp^l) = \pi_{k+1}(b_{k}p^{k})$
+  by induction.
+  Since $0 \leq a_k, b_k < p$, $a_k p^k = b_k p^k$ and hence $a_k = b_k$.
+  Therefore $a = b$. 
+
+  A general power series in $p$ converges because 
+  $\abs{a_k p^k}_p \leq \abs{p}_p^k = p^{-k} \to 0$,
+  the \linkto{prop:padic:normed_ring}{ultrametric property} of the norm
+  and completeness of $\Z_p$. 
+\end{proof}
+
+\begin{dfn}[$p$-adic Rationals]\link{dfn:padic:rat}
+  
+  $\Q_p$ is defined as the field of fractions of $\Z_p$. 
+\end{dfn}
+
+\begin{prop}[$\Q_p$ as Localizing $\Z_p$ at $p$]
+  \link{prop:padic:rat:localization}
+  
+  As $\Z_p$ algebras,
+  $\Q_p$ is canonically isomorphic to $(\Z_p)_p = \Z_p[X]/(pX-1)\Z_p[X]$,
+  the localization of $\Z_p$ with respect to the element $p$. 
+\end{prop}
+\begin{proof}
+  Since $p$ is invertible in $\Q_p$, 
+  there is a canonical $\Z_p$-algebra morphism from $(\Z_p)_p$ to $\Q_p$.
+  Since $\Z_p$ be an integral domain, 
+  $\Z_p$ injects into $\Q_p$ and thus $(\Z_p)_p$ injects into $\Q_p$ as well.
+  By \linkto{prop:padic:decomp}{unique decomposition},
+  every element of $\Q_p$ is of the form $(p^nu)/(p^m v)$ where 
+  $n, m \in \N$ and $u, v \in \Z_p^\times$. 
+  Therefore every element of $\Q_p$ is of the form $p^k w$
+  where $k \in \Z$ and $w \in \Z_p^\times$. 
+  This shows $(\Z_p)_p$ surjects onto $\Q_p$,
+  i.e. the canonical morphism from $(\Z_p)_p$ to $\Q_p$ is an isomorphism.
+\end{proof}
+
+\begin{rmk}[Meaning of $\Q_p$]\link{rmk:padic:rat}
+  
+  Continuing with the \linkto{rmk:padic}{analogy}, 
+  $\Q_p$ is the field of Laurent series at $p$ 
+  with $p$ as a non-essential singularity.
+\end{rmk}
+
+\begin{dfn}[$p$-adic Valuation on $\Q_p$]\link{dfn:padic:rat:val}
+  
+  We extend the $p$-adic valuation to $\Q_p$ by : 
+  \begin{align*}
+    v_p : \map{\Q_p}{\N^\infty}{}{}, 
+    \frac{x}{p^n} \in (\Z_p)_p \mapsto v_p(x) - n
+  \end{align*}
+
+  From this, we extend the $p$-adic norm as well : 
+  \begin{align*}
+    \abs{\star}_p : \map{\Q_p}{[0,\infty)\subs \R}{}{}, 
+    x \mapsto \begin{cases}
+      p^{-v_p(x)} &,\, x \neq 0 \\
+      0 &,\, x = 0
+    \end{cases}
+  \end{align*}
+\end{dfn}
+
+\begin{prop}[Topological Properties of $\Q_p$]\link{prop:padic:rat:top_prop}
+  
+  The following are true : 
+  \begin{enumerate}
+    \item $(\Q_p,\abs{\star}_p)$ is a normed ring (field) 
+    and hence a topological ring. 
+    \item $\Z_p$ is homeomorphic to its canonical image in $\Q_p$,
+    where it is an open subring of $\Q_p$.
+    Hence, $\Q_p$ is locally compact. 
+    \item $\Q_p$ is complete. 
+    \item Since $\Z$ injects canonically into $\Q_p$, 
+    $\Q$ injects canonically into $\Q_p$ as well. 
+    Then $\Q$ is dense $\Q_p$.
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+  
+  $(1)$ Same proof as for $\Z_p$.
+  
+  $(2)$ Since the norm of $\Q_p$ extends that of $\Z_p$, 
+  $\Z_p$ is homeomorphic to its canonical image in $\Q_p$. 
+  $\Z_p = B_{p}(0)$, since the image of $\abs{\star}_p$ is discrete. 
+  For all points $x \in \Q_p$, 
+  the clopen ball of size $1$ around $x$ is homeomorphic to $\Z_p$ 
+  (by translation).
+  Hence every $x$ has a compact neighbourhood. 
+
+  $(3)$ Let $a : \N \to \Q_p$ be a cauchy sequence. 
+  Then there exists $N \in \N$ such that for all $n \geq N$, 
+  $a_n \in B_1(a_N) = a_N + \Z_p$. 
+  Since $\Z_p$ is complete and $B_1(a_N)$ is isometric to $\Z_p$,
+  $a_n$ converges in $B_1(a_N)$
+  and hence in $\Q_p$. 
+
+  $(4)$ follows from elements in $\Q_p$ being 
+  of \linkto{prop:padic:rat:localization}{the form $p^{-n} x$}
+  where $x \in \Z_p$ and 
+  \linkto{prop:padic:top_prop}{$\Z$ being dense in $\Z_p$}. 
+\end{proof}
+
+\subsection{$p$-adic Equations}
+
+\begin{prop}[Inverse Limit of Finite, Non-Empty System is Non-Empty]
+  \link{prop:inv_lim:nonempty}
+  
+  Let $D : \N\op \to \SET$ be a projective system 
+  such that for all $n\in \N$, $D_n$ is finite and non-empty. 
+  Then $\LIM{n \in \N\op} D_n$ is nonempty. 
+\end{prop}
+\begin{proof}
+  If $D$ is a surjective system, then $\LIM{n \in \N} D_n$ is non-empty. 
+  We will reduce to this case. 
+
+  For $n \in \N$, 
+  consider the descending sequence of subsets 
+  $\set{\fall{n}{k} D_k \st n \leq k}$ in $D_n$. 
+  Since $D_n$ is finite, 
+  there exists an $N$ such that for all $k \geq N$, 
+  $\fall{n}{k} D_k = \fall{n}{N} D_N$.
+  For $n \in \N$, 
+  let $N(n)$ be the minimal natural with respect to this property. 
+  Let $E_n := \fall{n}{N(n)} D_{N(n)}$.
+  Since $D_{N(n)} \neq \nothing$, $E_n \neq \nothing$. 
+  For $n \in \N$, 
+  let $M = \max(N(n),N(n+1))$. 
+  Then $E_n = \fall{n}{M} D_M = \fall{n}{n+1}\fall{n+1}{M} D_M 
+  = \fall{n}{n+1} E_{n+1}$. 
+  Thus $E : \N\op \to \SET$ is a non-empty, surjective system that
+  injects into $D$. 
+  Therefore $\nothing \neq \LIM{n\in \N\op} E_n \to \LIM{n\in\N\op} D_n$.
+\end{proof}
+
+\begin{notation}
+  Let $n \in \N, 0 < m$. 
+  Then there is a canonical morphism of $\Z_p$ algebras from 
+  $\Z_p[X_1,\dots,X_m]$ to $\Z/p^n\Z[X_1,\dots,X_m]$.
+  For $f \in \Z_p[X_1,\dots,X_m]$,
+  let $f_n$ denote its image in $\Z/p^n\Z[X_1,\dots,X_m]$. 
+  More explicitly, for $f = \dsum{t \in \N^m}{} a_t \underline{X}^t$,
+  \[
+    f_n := \dsum{t \in \N^m}{} \ep_n(a_t) \underline{X}^t
+  \]
+\end{notation}
+
+\begin{prop}[$p$-adic Affine Variety is Inverse Limit]
+  \link{prop:eqn:inv_lim}
+
+  Let $0 < m$, $I \subs \Z_p[X_1,\dots,X_m]$, $I_n$ the image of $I$
+  in $\Z/p^n\Z[X_1,\dots,X_m]$ for $n \in \N$. 
+  Then $\V{I} \iso \LIM{n \in \N\op} \V{I_n}$ as sets. 
+  In particular, 
+  the variety defined by $I$ is non-empty if and only if 
+  for all $n\in \N$, its projection mod $p^n$ is non-empty. 
+\end{prop}
+\begin{proof}
+  
+  We first show that $\Z_p^m$ has the universal property of 
+  $\LIM{n \in \N\op} (\Z/p^n\Z)^m$. 
+  Let $X$ be an arbitrary set. 
+  We have the following chain of set-theoretic isomorphisms : 
+  \begin{align*}
+    \SET(X,\Z_p^m) \iso \brkt{\SET(X,\Z_p)}^m 
+    \iso \brkt{\SET^{\N\op}(\underline{X},\Z/p^\star\Z)}^m 
+    \iso \SET^{\N\op}(\underline{X},\brkt{\Z/p^\star\Z}^m)
+  \end{align*}
+  % (Breaking this fall : 
+  % An element $x$ of $\Z_p^m$ is the same as 
+  % $m$ elements $x_i$ of $\Z_p$,
+  % which is the same as an $m$-tuple of sequences 
+  % $((\ep_k(x_1))_{k \in \N},\dots,\ep_k(x_m))_{k \in \N})$ in 
+  % the projective system $\Z/p^\star\Z$, 
+  % which is the same as a sequence 
+  % $((\ep_k(x_1),\dots,\ep_k(x_m)))_{k \in \N}$ in 
+  % the projective system $(\Z/p^\star\Z)^m$, 
+  % which is the same as an element in the inverse limit of $(\Z/p^\star\Z)^m$.
+  % )
+  Thus $\Z_p^m \iso \LIM{n\in\N\op} (\Z/p^n\Z)^m$ in a unique way that 
+  commutes with their projections to $(\Z/p^n\Z)^m$. 
+
+  For $x \in \Z_p^m$ and $f \in \Z_p[X_1,\dots,X_m]$,
+  $f(x) = 0$ if and only if for all $n \in \N$, $\ep_n\circ f(x) = 0$. 
+  For $n \in \N$, \[
+    \ep_n\circ f(x) = \ep_n\brkt{\dsum{t\in\N^m}{}a_tx^t}
+    = \dsum{t\in\N^m}{}\ep_n(a)\ep_n^m(x)^t
+    = f_n\circ\ep_n^m(x)
+  \]
+  Therefore $f(x) = 0$ if and only if 
+  for all $n\in\N$, $f_n\circ\ep_n^m(x) = 0$.
+  This shows that $\V{I} \iso \LIM{n \in \N\op} \V{I_n}$
+  under the isomorphism $\Z_p^m \iso \LIM{n\in\N\op} (\Z/p^n\Z)^m$. 
+
+  The `in particular' follows from 
+  \linkto{prop:inv_lim:nonempty}{inverse limit of finite, nonempty is nonempty}.
+\end{proof}
+
+\begin{dfn}[Primitive Solutions]\link{dfn:prim}
+  
+  Let $m, n \in \N^+$. 
+  For $x \in \Z_p^m$, $x$ is called \emph{primitive} when $\ep_1^m(x) \neq 0$,
+  i.e. when it is not divisible by $p$. 
+  Similarly, for $x \in (\Z/p^n\Z)^m$, 
+  $x$ is called primitive when $(\fall{1}{n})^m x \neq 0$. 
+\end{dfn}
+
+\begin{dfn}[Homogeneous Polynomials]\link{dfn:homogen}
+  
+  Let $1 \leq m$, $A$ be a commutative ring,
+  $f \in A[X_1,\dots,X_m]$. 
+  Then $f$ is called \emph{homogeneous} when 
+  for all $\la \in A$, $f(\la X) = \la^{\deg f} f(X)$.
+  Equivalently, all monomials in $f$ with non-zero coefficients 
+  have the same degree. 
+\end{dfn}
+
+\begin{prop}[$\Q_p$, $\Z_p$ Points of Projective Varieties(?)]
+  \link{prop:eqn:rat_pts}
+
+  Let $1\leq m$, $I \subs \Z_p[X_1,\dots,X_m]$,
+  for all $f \in I$, $f$ homogeneous. 
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item There exists $x \in \V[\Q_p]{I}$ such that $x \neq 0$.
+    \item There exists $x \in \V[\Z_p]{I}$ such that $x$ is primitive.
+    \item For all $n \geq 1$, 
+    there exists $x_n \in \V[\Z/p^n\Z]{I_n}$ such that $x_n$ primitive.
+    \footnote{
+      Serre only requires $n > 1$. 
+      This is indeed equivalent since have a primitive zero for any $n > 1$
+      automatically gives you a primitive zero for $n = 1$ via $\fall{1}{n}$. 
+      We cannot let $n = 0$ though, since there are no primitive elements in 
+      ${\Z/\Z}^m = 0^m$. 
+    }
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+  
+  $(1\iff 2)$ The reverse implication is clear. 
+  For forwards, let $x = (x_i)_{i = 1}^m \in \V[\Q_p]{I}$, $x \neq 0$. 
+  Let $h := \inf\set{v_p(x_i) \st i = 1, \dots, m}$.
+  Since $x \neq 0$, $h < \infty$.
+  Let $y := p^{-h}x$. 
+  Then by definition of $h$, $y \in \Z_p^m$ and there exists one component 
+  that is not-divisible by $p$, i.e. $y$ is primitive. 
+  Then $f(y) = p^{-h\deg f}f(x) = 0$ by homogeneity of $f$. 
+  Thus $y$ is as desired.
+  
+  $(2 \iff 3)$ It suffices to show that 
+  the sets of primitive elements in $\V[\Z/p^n\Z]{I_n}$ forms a 
+  projective subsystem of $\V[\Z/p^\star\Z]{I_\star}$ and that 
+  the inverse limit is isomorphic to the primitive elements in $\V[\Z_p]{I}$.
+  
+  Let $P : \N\op \to \SET$, 
+  $n \mapsto \V[\Z/p^n\Z]{I_n} \cap \set{x \st x \text{ primitive}}$. 
+  By the definition of $\V[\Z/p^\star\Z]{I_\star}$ being projective, 
+  ${\fall{n}{n+1}}^m$ takes primitive zeros to primitive zeros.
+  This induces the structure of a projective system for $P$,
+  making it a subsystem of $\V[\Z/p^\star\Z]{I_\star}$.
+  Hence, $\LIM{n\in\N\op} P_n$ injects into $\V[\Z_p]{I}$ canonically. 
+  We identify it with its image. 
+  Clearly, for any $x \in \LIM{n\in\N\op} P_n$, $\ep_1(x) \neq 0$. 
+  So $\LIM{n\in\N\op} P_n$ is a subset of primitive elements of $\V[\Z_p]{I}$.
+  Conversely, any primitive element $x$ of $\V[\Z_p]{I}$ defines 
+  a natural transformation from the singleton set $*$ as a constant functor
+  to the projective system $P$,
+  i.e. an element of $\LIM{n \in \N\op} P_n$ that maps to $x$. 
+  Hence $\LIM{n\in\N\op} P_n$ is equal to 
+  the set of primitives in $\V[\Z_p]{I}$.
+\end{proof}
+
+\begin{rmk}[Goal of this section]\link{rmk:eqn:goal}
+  
+  To give conditions to lift approximate solutions mod $p^n$
+  to solutions in $\Z_p$. 
+  This will be done via the $p$-adic analogue of 
+  \linkto{prop:eqn:newton}{Newton's method}.
+  As with Newton's method from real analysis, 
+  we need mean value theorem. 
+\end{rmk}
+
+\begin{prop}[Mean Value Theorem for Polynomials]
+  Let $A$ be a commutative ring, $f \in A[X]$, $a \in A$. 
+  Then $f - f(a) = f'(a)(X - a)$ in $A[X]/(X-a)^2A[X]$. 
+\end{prop}
+\begin{proof}
+  If the result is true for $g, h \in A[X]$,
+  then it's true for $\la g + h$ where $\la \in A$. 
+  Therefore it suffices to show the result for monomial $X^n$. 
+  This follows from induction. 
+\end{proof}
+
+\begin{prop}[$p$-adic Newton's Method]\link{prop:eqn:newton}
+  
+  Let $f \in \Z_p[X]$, $x \in \Z_p$ such that 
+  \[
+    \abs{f(x)}_p < \abs{f'(x)}_p^2
+  \]
+  Then there exists $\bar{x} \in \Z_p$ such that 
+  \begin{enumerate}
+    \item $\abs{f(\bar{x})}_p \leq p^{-1}\abs{f(x)}_p$
+    \item $\abs{\bar{x} - x}_p \leq \frac{\abs{f(x)}_p}{\abs{f'(x)}_p}$
+    \item $\abs{f'(\bar{x})}_p = \abs{f'(x)}_p$
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  If $f(x) = 0$, then pick $\bar{x} = x$. 
+  So WLOG $0 < \abs{f(x)}_p$. 
+  Note that since all $p$-adic integers have 
+  norm $\leq 1$, we have $\abs{f(x)}_p < \abs{f'(x)}_p$. 
+  Then $1 < \abs{f'(x)}_p \abs{f(x)}_p\inv \in p\Z \subs p\Z_p$. 
+  Define \[
+    \bar{x} := x + \frac{\abs{f'(x)}_p}{\abs{f(x)}_p} y
+  \]
+  for some $y \in \Z_p$ to be determined. 
+  Then by applying mean value theorem to $f$, we have \begin{align*}
+    f(\bar{x}) 
+    &= f(x) + f'(x)(\bar{x} - x) + a_0 (\bar{x} - x)^2 \\
+    &= f(x) + f'(x) y \abs{f'(x)}_p \abs{f(x)}_p\inv
+    + a \abs{f'(x)}_p^2 \abs{f(x)}_p^{-2}
+  \end{align*}
+  for some $a, a_0 \in \Z_p$.
+  By definition of $\abs{\star}_p$, 
+  the \linkto{prop:padic:top_prop}{topology of $\Z_p$} and 
+  \linkto{prop:padic:decomp}{unique decomposition}, 
+  $f(x) = b \abs{f(x)}_p\inv$ for some $b \in \Z_p^\times$
+  and $f'(x) = c \abs{f'(x)}_p\inv$ for some $c \in \Z_p^\times$.
+  We thus have \[
+    f(\bar{x}) = \brkt{b + y c}\abs{f(x)}_p\inv 
+    + a \abs{f'(x)}_p^2 \abs{f(x)}_p^{-2}
+  \]
+  Choosing $y := -bc\inv$, we obtain : 
+  \begin{align*}
+    &\abs{f(\bar{x})}_p = \abs{a \abs{f'(x)}_p^2 \abs{f(x)}_p^{-2}}_p
+    \leq \abs{f(x)}_p^2 \abs{f'(x)}_p^{-2} < \abs{f(x)}_p 
+    \implies \abs{f(\bar{x})}_p \leq p\inv \abs{f(x)}_p \\
+    &\abs{f'(x)}_p \abs{\bar{x} - x}_p
+    = \abs{f(\bar{x}) - f(x) - a_0 (\bar{x}-x)^2}_p
+    \leq \max(\abs{f(\bar{x})}_p,\abs{f(x)_p},\abs{a_0 (\bar{x}-x)^2}_p)
+    = \abs{f(x)}_p 
+  \end{align*}
+  It remains to show $\abs{f'(\bar{x})}_p = \abs{f'(x)}_p$. 
+  By applying mean value theorem to $f'$, 
+  we have for some $d, e \in \Z_p$, \begin{align*}
+    f'(\bar{x})
+    &= f'(x) + f''(x) y \abs{f'(x)}_p\abs{f(x)}_p\inv 
+    + d  \abs{f'(x)}_p^2 \abs{f(x)}_p^{-2} \\
+    &= \abs{f'(x)}_p\inv (c + e \abs{f'(x)}^2\abs{f(x)}_p\inv 
+    + d \abs{f'(x)}_p^3 \abs{f(x)}_p^{-2}) 
+  \end{align*}
+  Since $\abs{e \abs{f'(x)}^2\abs{f(x)}_p\inv}_p \leq 
+  \abs{f(x)}\abs{f'(x)}_p^{-2} < 1$ and 
+  $\abs{d \abs{f'(x)}_p^3 \abs{f(x)}_p^{-2}}_p \leq 
+  \abs{f(x)}_p^{2} \abs{f'(x)}_p^{-4} < 1$,
+  the term being multiplied by $\abs{f'(x)}_p\inv$ is still a unit, 
+  and hence norm $1$. 
+  It then follows from taking norms that 
+  $\abs{f'(\bar{x})}_p = \abs{\abs{f'(x)}_p\inv}_p = \abs{f'(x)}_p$.
+\end{proof}
+
+\begin{prop}[Lifting Solutions / Generalized Hensel's Lemma]
+  \link{prop:eqn:lift}
+  
+  Let $1 \leq m$, $f \in \Z_p[X_1,\dots,X_m]$, $x \in \Z_p^m$ such that 
+  there exists $1 \leq j \leq m$ satisfying 
+  \[
+    \abs{f(x)}_p < \abs{\res{\del{f}{X_j}}{x}}_p^2
+  \]
+  Then there exists $y \in \Z_p^m$ such that 
+  $f(y) = 0$ and 
+  \[
+    \max(\abs{\pi_i(y - x)}_p)_{1\leq i \leq m} 
+    \leq \frac{\abs{f(x)}_p}{\abs{\res{\del{f}{X_j}}{x}}_p}
+  \]
+  where $\pi_i : \Z_p^m \to \Z_p$ takes the $i$-th component.
+\end{prop}
+\begin{proof}
+  We induct on $m$. 
+
+  Suppose $m = 1$. Define $x_0 := x$. 
+  Then $\abs{f(x_0)}_p < \abs{f'(x_0)}_p^2$, 
+  so by \linkto{prop:eqn:newton}{$p$-adic Newton's method}, 
+  we have $x_1 \in \Z_p$ such that 
+  \begin{enumerate}
+    \item $\abs{f(x_1)}_p \leq p^{-1}\abs{f(x_0)}_p$
+    \item $\abs{x_1 - x_0}_p 
+    \leq \frac{\abs{f(x_0)}_p}{\abs{f'(x_0)}_p}$
+    \item $\abs{f'(x_1)}_p = \abs{f'(x_0)}_p$
+  \end{enumerate}
+  Then $\abs{f(x_1)}_p < \abs{f'(x_1)}_p^2$. 
+  By induction, we have a sequence $x : \N \to \Z_p$ such that 
+  for all $k \in \N$, 
+  \begin{enumerate}
+    \item $\abs{f(x_{k+1})}_p \leq p^{-1}\abs{f(x_k)}_p 
+    \leq p^{-(k+1)} \abs{f(x_0)}_p$
+    \item $\abs{x_{k+1} - x_k}_p 
+    \leq \frac{\abs{f(x_k)}_p}{\abs{f'(x_k)}_p}
+    \leq \frac{\abs{f(x_0)}_p}{p^k \abs{f'(x_0)}_p}$
+    \item $\abs{f'(x_{k+1})}_p = \abs{f'(x_k)}_p$
+  \end{enumerate}
+  From $(1)$, we see that 
+  $\lim_{k\to\infty} f(x_k) = 0$. 
+  From $(2)$ and the 
+  \linkto{prop:padic:normed_ring}{ultrametric property} of $\abs{\star}_p$, 
+  there exists $y \in \Z_p$ such that $\lim_{k\to\infty} x_k = y$. 
+  Since $\Z_p$ is a topological ring with topology from $\abs{\star}_p$ and
+  the map $\Z_p \to \Z_p, x \mapsto f(x)$ is defined by finitely many 
+  additions and multiplications,
+  it is continuous and hence
+  $f(y) = f(\lim_{k\to\infty} x_k) = \lim_{k\to\infty} f(x_k) = 0$.
+  For $k \in \N$, again by 
+  the \linkto{prop:padic:normed_ring}{ultrametric property},
+  \[
+    \abs{x_k - x}_p \leq \max\brkt{\abs{x_0 - x}_p,\dots,\abs{x_k - x}_p}
+    \leq \frac{\abs{f(x_0)}_p}{\abs{f'(x_0)}_p}
+  \]
+  Taking limits, we obtain \[
+    \abs{y - x}_p \leq \frac{\abs{f(x_0)}_p}{\abs{f'(x_0)}_p}
+  \]
+  as desired. 
+
+  For $1 < m$, we reduce to the single variable case. 
+  Define $\bar{f}(X_j) := f(\pi_1(x),\dots,X_j,\dots,\pi_m(x)) \in \Z_p[X_j]$.
+  By the single variable case,
+  there exists $y_j \in \Z_p$ such that $\bar{f}(y_j) = 0$ and 
+  \[
+    \abs{y_j - \pi_j(x)}_p 
+    \leq \frac{\abs{\bar{f}(\pi_j(x))}_p}{\abs{\bar{f}'(\pi_j(x))}_p}
+    = \frac{\abs{f(x)}_p}{\abs{{f}'(x)}_p}
+  \]
+  Let $y = (\pi_1(x),\dots,y_j,\dots,\pi_m(x))\in \Z_p^m$.
+  Then $f(y) = \bar{f}(y_j) = 0$ and for all $1 \leq i \leq m$,
+  \[
+    \abs{\pi_i(y - x)}_p \begin{cases}
+      = 0 &\, i \neq j \\
+      \leq \frac{\abs{f(x)}_p}{\abs{f'(x)}_p} &\, i = j
+    \end{cases} 
+  \]
+\end{proof}
+
+\begin{prop}[Hensel's Lemma]\link{prop:eqn:hensel}
+  
+  Let $1 \leq m$, $f \in \Z_p[X_1,\dots,X_m]$, $x \in \Z_p^m$, 
+  $\ep_1(f(x)) = 0$, $1 \leq i \leq m$, $\ep_1(\res{\del{f}{X_i}}{x}) \neq 0$.
+  Then there exists $y \in \Z_p^m$ such that 
+  $f(y) = 0$ and $\ep_1^m(y - x) = 0$. 
+\end{prop}
+\begin{proof}
+  $\ep_1(f(x)) = 0$ is equivalent to $\abs{f(x)}_p \leq p\inv$
+  and $\ep_1(\res{\del{f}{X_i}}{x}) \neq 0$ is equivalent to 
+  $\abs{\res{\del{f}{X_i}}{x}}_p = 1$.
+  The conditions of \linkto{prop:eqn:lift}{lifting solutions} are satisfied,
+  hence we have $y \in \Z_p^m$ such that for all $1 \leq i \leq m$, 
+  \[
+    \max(\abs{\pi_i(y - x)}_p)_{1\leq i \leq m} 
+    \leq \frac{\abs{f(x)}_p}{\abs{\res{\del{f}{X_j}}{x}}_p}
+  \]
+  The inequality is equivalent to $\ep_1^m(y - x) = 0$. 
+\end{proof}
+
+\begin{prop}[Lifting Solutions of Quadratic Forms for $p \neq 2$]
+  \link{prop:eqn:lift:quad:p_neq_2}
+  
+  Let $p \neq 2$, $1 \leq m$, 
+  $f = \dsum{i,j = 1}{m} a_{ij}X_iX_j \in \Z_p[X_1,\dots,X_m]$ where 
+  \begin{enumerate}
+    \item $[a_{ij}]^\top = [a_{ij}]$
+    \item $\det [a_{ij}] \in \Z_p^\times$
+  \end{enumerate}
+  i.e. $f$ is a non-degenerate quadratic form. 
+  Let $a \in \Z_p$, $x \in \Z_p^m$ such that 
+  $x$ is primitive and $\ep_1(f(x)) = \ep_1(a)$. 
+  Then there exists $y \in \Z_p^m$ such that 
+  $f(y) = a$ and $\ep_1^m(y - x) = 0$. 
+\end{prop}
+\begin{proof}
+  By \linkto{prop:eqn:hensel}{Hensel's Lemma},
+  it suffices to give $1 \leq i \leq m$ such that 
+  $\ep_1(\res{\del{f}{X_i}}{x}) \neq 0$. 
+  Taking the derivative of $f$, 
+  evaluating at $x$ and reducing mod $p$ yields 
+  the following linear system : 
+  \begin{align*}
+    \sqbrkt{\ep_1\brkt{\res{\del{f}{X_i}}{x}}}_{i = 1}^m 
+    = 2 [\ep_1(a_{ij})]_{i,j = 1}^m \ep_1(x)
+  \end{align*}
+  Since $\det [a_{ij}] \in \Z_p^\times$, 
+  $\det [\ep_1(a_{ij})]_{i,j = 1}^m \neq 0$.
+  The matrix is hence invertible and since 
+  $\ep_1(x) \neq 0$ by definition of \linkto{dfn:padic:prim}{primitivity},
+  there exists a desired $1 \leq i \leq m$. 
+\end{proof}
+
+\begin{prop}[Lifting Solutions of Quadratic Forms for $p = 2$]
+  \link{prop:eqn:lift:quad:p_eq_2}
+  
+  Let $p = 2$, $1 \leq m$, 
+  $f = \dsum{i,j = 1}{m} a_{ij}X_iX_j \in \Z_p[X_1,\dots,X_m]$ where 
+  $[a_{ij}]^\top = [a_{ij}]$, i.e. $f$ is a quadratic form. 
+  Let $a \in \Z_2$, $x \in \Z_2^m$ such that 
+  $x$ is primitive and $\ep_3(f(x)) = \ep_3(a)$. 
+  Then \begin{enumerate}
+    \item Let $1 \leq i \leq m$ where 
+    $\ep_2\brkt{\res{\del{f}{X_i}}{x}} \neq 0$.
+    Then there exists $y \in \Z_2^m$ such that $f(y) = a$ and 
+    $\ep_3(y - x) = 0$. 
+    \item The condition of $(1)$ is satisfied when 
+    $\det\sqbrkt{a_{ij}}_{i,j = 1}^m \in \Z_2^\times$. 
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+
+  $(1)$
+  $\ep_3(f(x)) = \ep_3(a)$ and 
+  $\ep_2\brkt{\res{\del{f}{X_i}}{x}} \neq 0$ are respectively equivalent to
+  $\abs{f(x) - a}_p \leq p^{-3}$ and $p\inv \leq \abs{\res{\del{f}{X_i}}{x}}_p$.
+  Hence \[
+    \abs{f(x) - a}_p < \abs{\res{\del{f}{X_i}}{x}}_p^2
+  \]
+  So by \linkto{prop:eqn:lift}{lifting solutions}, 
+  there exists $y \in \Z_p^m$ such that 
+  $f(y) = a$ and \[
+    \max(\abs{\pi_i(y - x)}_p)_{1\leq i \leq m} 
+    \leq \frac{\abs{f(x) - a}_p}{\abs{\res{\del{f}{X_j}}{x}}_p}
+  \]
+  By taking the derivative of $f$, evaluating at $x$ and 
+  reducing mod $2$, we have $\ep_1\brkt{\res{\del{f}{X_i}}{x}} = 0$ 
+  and hence its valuation is $1$.
+  We thus obtain \[
+    \max(\abs{\pi_i(y - x)}_p)_{1\leq i \leq m} 
+    \leq p^{-2}
+  \]
+  This is equivalent to $\ep_2(y - x) = 0$.
+
+  $(2)$ This follows from taking the derivative of $f$,
+  reducing mod $4$ and using the primitivity of $x$ and invertibility of 
+  $\ep_2[a_{ij}]_{i,j = 1}^m$. 
+\end{proof}
+
+\subsection{Units of $\Z_p$ and $\Q_p$}
+
+\begin{dfn}[Group Ring]\link{dfn:group_ring}
+  
+  Let $G$ be an abelian group. 
+  Then the \emph{group ring over $G$} is defined as 
+  \begin{align*}
+    \Z[G] := \Z[X_g]_{g\in G} / I 
+  \end{align*}
+  where $I := (X_e - 1)\Z[X_g]_{g\in G} 
+  + \dsum{g, h \in G}{} (X_g X_h - X_{gh})\Z[X_g]_{g\in G}$. 
+\end{dfn}
+
+\begin{notation}
+  For $G$ an abelian group, $g \in G$, 
+  we denote the image of $X_g$ in $\Z[G]$ with $g$. 
+  So elements of $\Z[G]$ are formal polynomials in elements of $G$
+  such that multiplication respects the multiplication of $G$. 
+  With this, $G$ injects into $\Z[G]$ and we subsequently identify $G$
+  with its image in $\Z[G]$. 
+\end{notation}
+
+\begin{prop}[Adjunction of Group Rings and Units]
+  \link{prop:group_ring:adj}
+  
+  The following are true : 
+  \begin{enumerate}
+    \item $\Z[-] : \map{\AB}{\CRING}{}{}$ is a functor. 
+    \item $\Z[-]$ and $(-)^\times$ forms an adjunction, that is to say 
+    $\CRING(\Z[-],\star) \iso \AB(-,(\star)^\times)$ naturally. 
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+  $(1)$ Follows from the universal property of polynomial ring over a set
+  and quotient ring. 
+
+  $(2)$ For a commutative ring $A$ and abelian group $G$, 
+  the map is $\CRING(\Z[G],A) \to \AB(G,A\times), f \mapsto f(g)$. 
+  This is well-defined because $G \subs \Z[G]^\times$. 
+  Injectivity and surjectivity follows, again, from 
+  universal property of the polynomial ring over $G$ and quotient ring.
+  Naturality is straightforward to check. 
+\end{proof}
+
+\begin{prop}[Coprime implies Split Exact]
+  \link{prop:corpime_implies_split_exact}
+  
+  Let $0 \to A \to E \to B \to 0$ be a short exact sequence of abelian groups.
+  Let $a = \abs{A}, b = \abs{B}, a, b < \infty$ such that $a,b$ coprime. 
+  Let $B' := \ker(b : x \mapsto b x)$. 
+  Then $E \iso A \oplus B'$ canonically and 
+  $B'$ is the unique subgroup of $E$ isomorphic to $B$. 
+\end{prop}
+\begin{proof}
+  Elementary. 
+\end{proof}
+
+In the following subsection, 
+let $\U := \Z_p^\times$ and for $n \in \N$, 
+$\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$. 
+
+\begin{prop}[Units of $\Z_p$ as a Inverse Limit]
+  \link{prop:padic:unit:inv_limt}
+  
+  $\U$ is a inverse limit of the projective system $\U/\U_\star$
+  in the category of abelian groups. 
+  More generally, for $k \in \N$, 
+  $\U_k \iso \LIM \U_k / \U_{k + \star}$ canonically.
+\end{prop}
+\begin{proof} 
+  From \linkto{prop:padic:truncation}{truncation}, 
+  we have $\Z_p/p^\star\Z_p \iso \Z/p^\star\Z$ canonically as 
+  projective systems of commutative rings. 
+  By taking inverse limits, 
+  we see that $\LIM \Z_p/p^\star\Z_p \iso \Z_p$ canonically. 
+  The result now follows since taking units is a 
+  \linkto{prop:group_ring:adj}{right adjoint functor},
+  and hence preserves limits. 
+
+  Now let $k \in \N$. 
+  Consider the following short exact sequence of projective systems 
+  of abelian groups : 
+  \[
+    1 \to \U_k / \U_\star \to \U / \U_\star \to \underline{\U / \U_k} \to 1
+  \]
+  where \[
+    \U_k / \U_\star : n \in \N\op \mapsto
+    \begin{cases}
+      1 &,\, n \leq k \\
+      \U_k / \U_n &,\, k \leq n
+    \end{cases}
+  \]
+  and \[
+    \underline{\U/\U_k} : n\in\N\op \mapsto 
+    \begin{cases}
+      1 &,\, n \leq k \\
+      \U/\U_k &,\, k \leq n
+    \end{cases}
+  \]
+  The sequence is short exact by the 3rd isomorphism theorem for groups. 
+  Since the system $\U_k/\U_\star$ is surjective, 
+  we can pass the short exact sequence to the inverse limit and obtain 
+  the short sequence of abelian groups : 
+  \[
+    1 \to \LIM{}\U_k/\U_\star \to \U \to \U/\U_k \to 1
+  \]
+  This shows that
+  $\U_k \iso \LIM{\U_k/\U_\star} \iso \LIM{\U_k/\U_{k + \star}}$ canonically
+  as abelian groups.
+\end{proof}
+
+\begin{prop}[The order of $\U_k/\U_n$]
+  \link{prop:padic:unit:quotient:order}
+  
+  Let $n \in \N$.
+  Then $U_n / U_{n+1} \iso \ker \brkt{\fall{n}{n+1}}^\times$
+  canonically as abelian groups, 
+  which is in turn isomorphic to $\Z/p\Z$. 
+  Hence for $k \geq n$, 
+  $\abs{U_k /U_n} = p^{n - k}$.
+\end{prop}
+\begin{proof}
+  Consider the following commutative diagram : 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      1 \arrow[r] & 
+      \U_{n+1} \arrow[r] \arrow[d,"\subs"] & 
+      \U \arrow[r] \arrow[d,"\id{}"] & 
+      \brkt{\Z/p^{n+1}\Z}^\times \arrow[r] \arrow[d,"(\fall{n}{n+1})^\times"] & 
+      1 \\
+      1 \arrow[r] & 
+      \U_n \arrow[r] & 
+      \U \arrow[r] & 
+      \brkt{\Z/p^n\Z}^\times \arrow[r] & 
+      1
+    \end{tikzcd}
+  \end{figure}
+  Then by the snake lemma, 
+  we have the exact sequence : 
+  \[1 \to 1 \to 1 \to \ker\brkt{\fall{n}{n+1}}^\times
+  \to \U_n / \U_{n+1} \to 1 \to 1 \to 1 \]
+  which says $U_n / U_{n+1} \iso \ker \brkt{\fall{n}{n+1}}^\times$. 
+  By counting $\brkt{\Z/p^{n+1}\Z}^\times$ and $\brkt{\Z/p^n\Z}^\times$,
+  we obtain $\abs{\ker\brkt{\fall{n}{n+1}}^\times} = p$
+  and hence isomorphic to $\Z/p\Z$ since $p$ is prime. 
+  To show $\abs{U_k/U_n} = p^n$ for $n \leq k$, 
+  note that by the first isomorphism, 
+  $\U_k / \U_{n-1} \iso (\U_k / \U_{n}) / (\U_n / \U_{n-1})$,
+  so $\abs{\U_k / \U_{n}} = \abs{\U_n / \U_{n-1}} \abs{\U_k / \U_{n-1}}
+  = p^{n - k}$ by induction. 
+\end{proof}
+
+\begin{prop}[Structure of $\U$]
+  \link{prop:padic:unit:u}
+  
+  Let $\V := \set{x \in \U \st x^{p - 1} = 1}$. 
+  Then $\U \iso \V \times \U_1$ canonically where
+  $\V$ is isomorphic to $\F_p^\times$ under $\ep_1^\times$ and 
+  is the unique subgroup isomorphic to $\F_p^\times$.
+  Hence $\Q_p$ has $p-1$ roots of unity. 
+\end{prop}
+\begin{proof}
+  Consider again the short exact sequence of projective systems of 
+  abelian groups : 
+  \[
+    1 \to \U_1 / \U_\star \to \U / \U_\star \to \underline{\U / \U_1} \to 1
+  \]
+  Note that the system $\underline{\U/\U_1} \iso \underline{\F_p^\times}$
+  canonically. 
+  For $n \in \N$, $1 \leq n$,
+  we have \linkto{prop:padic:unit:quotient:order}{$\abs{\U_1/\U_n} = p^{n-1}$}.
+  $p^{n-1}$ and $p-1$ are coprime.
+  So by \linkto{prop:coprime_implies_short_exact}{coprime implies short exact},
+  $\V_n = \set{x \in \U/\U_n \st x^{p-1} = 1}$ has the property that 
+  $\U/\U_n \iso \V_n \times \U_1/\U_n$ canonically and 
+  it is the unique subgroup of 
+  $\U/\U_n$ that's isomorphic of $\U/\U_1$. 
+  Under the following commutative square 
+  \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+      \U/\U_{n+1} \arrow[r] \arrow[d] & 
+      \U/\U_1 \arrow[d,"\id{}"] \\
+      \U/\U_n \arrow[r] & 
+      \U/\U_1
+    \end{tikzcd}
+  \end{figure}
+  the horizontal projections map $\V_n,\V_{n+1}$ isomorphically to $\U/\U_1$.
+  Thus $\V_\star$ forms a projective system of abelian groups :
+  \begin{cd}
+    \cdots \arrow[r,"\sim"] & 
+    \V_2 \arrow[r,"\sim"] & 
+    \V_1 \arrow[r] & 
+    1 
+  \end{cd}
+  With this, the first short exact sequence turns into \[
+    1 \to \U_1 / \U_\star \to 
+    \V_\star \times (\U_1 / \U_\star) \to \underline{\U / \U_1} \to 1
+  \]
+  Finally, as noted before $\U_1/\U_\star$ is surjective,
+  so we can pass the short exact sequence to the inverse limit. 
+  \[
+    1 \to \U_1 \to \LIM{}\brkt{\V_\star \times (\U_1/\U_\star)} 
+    \to \U/\U_1 \to 1
+  \]
+  This shows that 
+  $\U \iso \LIM{}\brkt{(\U_1/\U_\star) \times \V_\star}$ canonically.
+  Let $\V := \LIM{} \V_\star \iso \U/\U_1$. 
+  Then since limits commute with limits, 
+  we have $\U \iso \V \times \U_1$ canonically. 
+  The fact that $\ep_1^\times : \V \iso \F_p^\times$ comes from 
+  $\V_1 = \U/\U_1 \iso \F_p^\times$ canonically. 
+  An element $x \in \U$ satisfies $x^{p-1} = 1$ if and only if 
+  it satisfies it modulo $p^n$ for all $n$. 
+  which is equivalent to $x$ being in $\V_n$ modulo $\U_n$ for all $n$,
+  which is in turn equivalent to $x \in \V$.
+  This shows the form of $\V$. 
+  To show uniqueness of $\V$, 
+  note that any subgroup isomorphic to $\F_p^\times$ must satisfy 
+  $x^{p-1} = 1$ by Lagranges theorem, and hence be a subgroup of $\V$,
+  and thus equal to $\V$. 
+
+\end{proof}
+\begin{proof}
+  Consider the polynomial $f := X^{p-1} - 1 \in \Z_p[X]$.
+  The integers $x = 1, \dots, p - 1$ are roots modulo $p$,
+  i.e. $\ep_1(f(x)) = 0$. 
+  Furthermore, $0 = \ep_1(f'(x)) = (p - 1)x^{p-2} = - x^{p-2}$ 
+  implies $x = 0$, which cannot be. 
+  We thus have the conditions for \linkto{prop:eqn:hensel}{Hensel's lemma},
+  and hence have $x_1,\dots,x_{p-1} \in \Z_p$ satisfying $f(x) = 0$. 
+  These elements are distinct since they are distinct modulo $p$. 
+  By going into $\Q_p$ and the factor theorem,
+  there are at most $p-1$ elements satisfying $x^{p-1} = 1$.
+  Hence $\V = \set{x_1,\dots,x_{p-1}}$. 
+  Uniqueness of $\V$ follows again from Lagrange's theorem. 
+\end{proof}
+
+\begin{prop}[Convergence of Units to 1]
+  \link{prop:padic:unit:conv}
+  
+  Let $n \in \N$ such that 
+  \[
+    p \neq 2 \implies 1 \leq n \text{ and }
+    p = 2 \implies 2 \leq n
+  \]
+  Let $x \in \U_n\minus\U_{n+1}$. 
+  Then $x^p \in \U_{n+1}\minus\U_{n+2}$. 
+\end{prop}
+\begin{proof}
+  We have $x = 1 + k p^n$ where $k \in \Z_p \minus p\Z_p$.
+  Then by the binomial theorem, we have \[
+    x^p = 1 + k p^{n+1}
+    + \dsum{l = 2}{p-1} \frac{(p-1)!}{l!(p-l)!} k^l p^{n l + 1} 
+    + k^n p^{np}
+  \]
+  For $2 \leq l$, $n+2 \leq 2n + 1 \leq n l + 1$. 
+  For $p = 2$, $n + 2 \leq 2 p$ and 
+  for $p \neq 2$, $n + 2 \leq 3n \leq n p$,
+  and hence $n+2 \leq np$ in general. 
+  This shows that $\ep_{n+2}(x^p) = 1 + k p^{n+1}$,
+  which gives the desired result. 
+\end{proof}
+
+\begin{rmk}[Why Structure of $\U_1$ is Not Surprising]
+  \link{rmk:padic:unit:u_1}
+  
+  The following result is analogous to the fact that 
+  given any unit real $\al$, 
+  $\R \iso \R^\times$ as abelian groups via the morphism 
+  $x \mapsto \al^x$. 
+\end{rmk}
+
+\begin{prop}[Structure of $\U_1$]
+  \link{prop:padic:unit:u_1}
+  
+  The following are true : 
+  \begin{enumerate}
+    \item Let $p \neq 2$. Then $\U_1 \iso \Z_p$ as abelian groups. 
+    \item Let $p = 2$. Then 
+    $\U_1 \iso (-1)^\Z \times \U_2$ canonically as abelian groups 
+    where $(-1)^\Z$ is the subgroup generated by $-1$
+    and $\U_2 \iso \Z_2$ as abelian groups. 
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+  $(p \neq 2)$
+  Let $\al \in \U_1\minus\U_2$, for example $1 + p$. 
+  For $n \in \N$, let $\al_n \in \U_1/\U_{n+1}$ be the image of $\al$. 
+  Then by \linkto{prop:padic:unit:conv}{convergence of units to 1},
+  we have for $k \in \N$, $\al^{p^k} \in \U_{1 + k}\minus\U_{2 + k}$. 
+  So $\al_n^{p^{n}} = 1$, $\al_n^{p^{n-1}} \neq 1$ and 
+  $\abs{\U_1/\U_{n+1}} = p^n$ implies 
+  $\U_1/\U_{n+1}$ is cyclic with generator $\al_n$. 
+  From this, we can define the following morphism of projective systems : 
+  \begin{align*}
+    \theta_\al &: \Z/p^\star \Z \to \U_1/\U_{\star + 1} \\
+    (\theta_\al)_n &: z \in \Z/p^n\Z \mapsto \al_n^{z} \in \U_1/\U_{n+1}
+  \end{align*}
+  Since $\al_n$ has order $p^n$, $(\theta_\al)_n$ is well-defined.
+  It is clearly a morphism of abelian groups, 
+  thus $\theta_\al$ is indeed 
+  a morphism of projective systems of abelian groups.
+  We therefore have the following short exact sequence of
+  projective systems of abelian groups : 
+  \[
+    0 \to 0 \to \Z/p^\star\Z \to \U_1/\U_{\star+1} \to 1
+  \]
+  Since $0$ is a surjective system, 
+  we can pass the isomorphism to the limit and obtain 
+  $\Z_p \iso \U_1$ as abelian groups. 
+
+  $(p = 2)$
+  $\ep_2(-1) = -1 \neq 1$ implies $\Z(-1) \cap \U_2 = \set{1}$.
+  Since the short exact sequence 
+  \[
+    1 \to \U_2 \to \U_1 \overset{\ep_2}{\to} (\Z/4\Z)^\times \to 1
+  \]
+  maps $-1$ to $-1$, $\U_1 = (-1)^\Z \U_2$.
+  Hence $\U_1 \iso (-1)^\Z \times \U_2$ canonically as abelian groups. 
+
+  For $\U_2 \iso \Z_2$, we use a similar technique to the $p \neq 2$ case. 
+  Let $\al \in \U_2\minus\U_3$, such as $5$. 
+  For $n \in \N$, define $\al_n \in \U_2/\U_{n+2}$ be the image of $\al$. 
+  Then by \linkto{prop:padic:unit:conv}{convergence of units to 1},
+  we have for $k \in \N$, $\al^{p^k} \in \U_{2 + k}\minus\U_{3 + k}$. 
+  So $\al_n^{2^{n}} = 1$, $\al_n^{2^{n-1}} \neq 1$ and 
+  $\abs{\U_2/\U_{n+2}} = 2^n$ implies $\U_2/\U_{n+2}$ is cyclic 
+  with generator $\al_n$. 
+  We can thus define $\theta_\al$ in an analogous way to $p\neq 2$
+  and yield an isomorphism $\Z_2 \iso \U_2$ of abelian groups. 
+\end{proof}
+
+\begin{prop}[Structure of Units of $\Q_p$]
+  \link{prop:padic:rat:unit:str}
+
+  The following are true : 
+  \begin{itemize}
+    \item Let $p \neq 2$. 
+    Then $\Q_p^\times \iso p^{\Z} \times \V \times \U_1$ 
+    canonically as abelian groups
+    where $p^\Z$, $(-1)^\Z$ are the subgroups generated $p$ and $-1$. 
+    \item Let $p = 2$.
+    Then $\Q_2^\times \iso 2^{\Z} \times (-1)^\Z \times \U_2$.
+  \end{itemize}
+\end{prop}
+\begin{proof}
+  $\Q_p^\times \iso p^\Z \times \U$ from 
+  elements of $\Q_p^\times$ being of the
+  \linkto{prop:padic:rat:local}{form $p^{n}u$} where 
+  $n \in \Z$, $u \in \Z_p^\times = \U$.
+  The rest follows from the structure of 
+  \linkto{prop:padic:unit:u}{$\U$} and \linkto{prop:padic:unit:u_1}{$\U_1$}.
+\end{proof}
+
+\begin{prop}[Squares in $\Q_p$]
+  \link{prop:padic:rat:sq}
+  
+  The following are true : 
+  \begin{itemize}
+    \item ($p \neq 2$) Let $x = p^n u \in \Q_p^\times$ where 
+    $n \in \Z$ and $u \in \Z_p^\times$. 
+    Then $x \in \Q_p^{\times(2)}$ if and only if 
+    $n \in 2\Z$ and $\ep_1(u) \in \F_p^{\times(2)}$.
+    \item ($p = 2$) Let $x = 2^n u \in \Q_2^\times$ where 
+    $n \in \Z$ and $u \in \Z_2^\times$. 
+    Then $x \in \Q_2^{\times(2)}$ if and only if 
+    $n \in 2\Z$ and $\ep_3(u) = 1$. 
+  \end{itemize}
+\end{prop}
+\begin{proof}~
+
+  $(p \neq 2)$ From the 
+  \linkto{prop:padic:rat:unit:str}{structure of $\Q_p^\times$}, 
+  we have $\Q_p^\times \iso p^\Z \times \V \times \U_1$. 
+  We have a decomposition of $x = p^n v u_1$
+  where $n\in\Z$, $v \in \V$ and $u_1 \in \U$.
+  It follows that $x$ is a square if and only if 
+  $n \in 2\Z$, $v$ is a square and $u_1$ is a square. 
+  Since $\U_1 \iso \Z_p$ as abelian groups and 
+  scalar multiplication by $2$ is surjective in $\Z_p$,
+  every element of $\U_1$ is a square. 
+  Mapping $\ep_1 : \V \to \F_p^\times$ is 
+  an \linkto{prop:padic:unit:u}{isomorphism} 
+  with $\ep_1(v) = \ep_1(u)$.
+  So $v$ is a square if and only if $\ep_1(u)$ is a square. 
+
+  $(p = 2)$ From the 
+  \linkto{prop:padic:rat:unit:str}{structure of $\Q_p^\times$}, 
+  we have $\Q_2^\times \iso 2^\Z \times (-1)^\Z \times \U_2$. 
+  Decompose $x = 2^n(-1)^m u_2$ with $n, m \in \Z$ and $u_2 \in \U_2$. 
+  Then $x$ is a square if and only if $n \in 2\Z$ and $u = u_2$ is a square. 
+  Consider the isomorphism of projective systems 
+  $\theta_\al : \Z/2^\star\Z \iso \U_2/\U_{2 + \star}$.
+  We have the following commutative diagram with exact rows : 
+  \begin{cd}
+    0 \arrow[r]
+    & \Z/2^\star\Z \arrow[r,"2"] \arrow[d,"\sim"{swap}] 
+    & \Z/2^\star\Z \arrow[d,"\theta_\al","\sim"{swap}] \\
+    1 \arrow[r]
+    & \U_3/\U_{2 + \star} \arrow[r]
+    & \U_2/\U_{2 + \star}
+  \end{cd}
+  where $\U_3/\U_{2 + \star}$ denotes the system 
+  \begin{cd}
+    1 & \U_3/\U_3 \arrow[l] & \U_3/\U_4 \arrow[l] & \arrow[l] \cdots
+  \end{cd}
+  Taking inverse limits as before, 
+  we obtain an isomorphism of abelian groups $2\Z_2 \iso \U_3$
+  which respects the isomorphism of $\Z_2 \iso \U_2$.
+  This shows that $\U_2^{(2)} = \U_3$.
+  Therefore $u$ is a square if and only if $\ep_3(u) = 1$.
+\end{proof}
+\begin{proof}~
+  
+  $(p \neq 2)$ An alternative proof for $\U_1 = \U_1^{(2)}$.
+  Let $a \in \U_1$. Consider the polynomial $f := X^2 - a$.
+  Then $\ep_1(f(1)) = 0$ and $\ep_1(f'(1)) = 2 \neq 0$.
+  So by \linkto{prop:eqn:hensel}{Hensel's lemma},
+  there exists $b \in \Z_p$ such that $b^2 = a$ and $\ep_1(b) = \ep_1(1) = 1$.
+
+  $(p = 2)$ An alternative proof for $\U_2^{(2)} = \U_3$.
+  The forward inclusion is given by \linkto{prop:padic:unit:conv}{
+  convergence of units to $1$}.
+  For the reverse inclusion, let $u \in \U_3$. 
+  Consider the polynomial $f := X^2 - u$. 
+  Then $\ep_3(f(1)) = 0$ and $\ep_2(f'(1)) = 2 - 1 = 1 \neq 0$.
+  So by \linkto{prop:eqn:lift:quad:p_eq_2}{
+  lifting solutions of quadratic forms for $p = 2$},
+  we obtain the existence of $v \in \Z_2$ such that $v^2 = u$ and 
+  $\ep_3(v) = \ep_3(u) = 1$. 
+  This shows that $u \in \U_2^(2)$. 
+\end{proof}
+
+\begin{prop}[Alternate Equivalence for being Square in $\Q_2$]
+  \link{prop:padic:rat:sq:alt}
+  
+  Let $p = 2$. 
+  Define \begin{align*}
+    \ep : \U \to \Z/2\Z, x \mapsto \ep_1\brkt{\frac{x - 1}{2}}
+    \quad\quad 
+    \om : \U_2 \to \Z/2\Z, x \mapsto \ep_1\brkt{\frac{x^2 - 1}{8}}
+  \end{align*}
+  Then the following are true : 
+  \begin{enumerate}
+    \item $\ep : \U/\U_2 \to \Z/2\Z$
+    is an isomorphism of abelian groups. 
+    \item $\om : \U_2/\U_3 \to \Z/2\Z$ is an isomorphism of abelian groups. 
+    \item $(\ep,\om) : \U/\U_3 \to \Z/2\Z \times \Z/2\Z$
+    is an ismorphism of abelian groups. 
+    Hence $u \in \U^{(2)}$ if and only if $\ep(x) = \om(x) = 0$.
+  \end{enumerate}
+\end{prop}
+\begin{proof}~
+  
+  $(1)$ Let $x \in \U = 1 + 2\Z_2$.
+  Then since $\Z_2$ is a \linkto{prop:padic:ID}{integral domain}, 
+  there exists a unique $\bar{x} \in \Z_2$
+  such that $x = 1 + 2\bar{x}$.
+  Hence $(x - 1)/2$ is well-defined. 
+  Let $y \in \U$, $y = 1 + 2 \bar{y}$. 
+  Then \[
+    x y = (1 + 2 \bar{x})(1 + 2\bar{y}) 
+    = 1 + 2 (\bar{x} + \bar{y} + 2\bar{x}\bar{y})
+  \]
+  Hence $\ep(x y) = \ep(x) + \ep(y)$. 
+  Clearly $\ep$ is surjective. 
+  It remains to show that $\ker\ep = \U_2$.
+  Well, $\ep(x) = \ep_1((x-1)/2) = 0$ if and only if 
+  $\bar{x} \in 2\Z_2$ if and only if 
+  $\ep_2(x) = 1$ if and only if $x \in \U_2$. 
+
+  $(2)$ Let $x \in \U_2 = 1 + 4 \Z_2$. 
+  Then again since $\Z_2$ is a \linkto{prop:padic:ID}{integral domain},
+  there exists a unique $\bar{x} \in \Z_2$
+  such that $x = 1 + 4\bar{x}$.
+  Then $x^2 = (1 + 4\bar{x})^2 = 1 + 8(\bar{x} + 2\bar{x}^2)$,
+  hence $(x^2 - 1)/8$ is well-defined. 
+  Let $y = 1 + 4 \bar{y} \in \U_2$.
+  By similar computation as before, $\om(x y) = \om(x) + \om(y)$. 
+  Clearly, $\om$ is surjective,
+  so it remains to show that $\ker\om = \U_3$.
+  Well, $\om(x) = \ep_1((x^2 - 1 )/ 8) = 0$ if and only if 
+  $\bar{x} \in 2\Z_2$ if and only if 
+  $x \in \U_3$. 
+
+  $(3)$ By the 3rd isomorphism theorem of modules, 
+  $(\U/\U_3)/(\U_2/\U_3) \iso \U/\U_2$ canonically.
+  Since $\U/\U_3$ is isomorphic to $\Z/8\Z^\times$,
+  there exists a section for the short exact sequence : 
+  \[
+    1 \to \U_2/\U_3 \to \U/\U_3 \to \U/\U_2 \to 1
+  \]
+  Thus $\U/\U_3 \iso \U/\U_2 \times \U_2/\U_3$
+  and the latter is isomorphic to $\Z/2\Z \times \Z/2\Z$ via 
+  $(\ep,\om)$ as claimed. 
+  The ``Hence'' follows from $\U^{(2)} = \U_3$,
+  which itself follows from the 
+  \linkto{prop:padic:rat:unit:str}{structure of $\Q_2^\times$}. 
+
+\end{proof}

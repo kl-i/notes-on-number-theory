@@ -16,8 +16,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{tgpagella}
+\usepackage{cancel}
 
 % Shortcuts
+
+% % Local Shortcuts
+\newcommand{\zmo}[2][p]{\Z/#1^{#2}\Z}
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -28,6 +32,11 @@
 \renewcommand{\implies}{\Rightarrow}
 \renewcommand{\iff}{\Leftrightarrow}
 \newcommand{\limplies}{\Leftarrow}
+\newcommand{\NOT}{\neg\,}
+\newcommand{\AND}{\, \land \,}
+\newcommand{\OR}{\, \lor \,}
+\newenvironment{forward}{($\implies$)}{}
+\newenvironment{backward}{($\limplies$)}{}
 
 % % Sets
 \DeclareMathOperator{\supp}{supp}
@@ -51,7 +60,12 @@
 \newcommand{\om}{\omega}
 \newcommand{\si}{\sigma}
 
+\newcommand{\Ga}{\Gamma}
 \newcommand{\De}{\Delta}
+\newcommand{\Th}{\Theta}
+\newcommand{\La}{\Lambda}
+\newcommand{\Si}{\Sigma}
+\newcommand{\Om}{\Omega}
 
 % % Mathbb
 \newcommand{\N}{\mathbb{N}}
@@ -61,12 +75,34 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\bP}{\mathbb{P}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\U}{\mathbb{U}}
 
 % % Mathcal
+\newcommand{\BB}{\mathcal{B}}
 \newcommand{\CC}{\mathcal{C}}
 \newcommand{\DD}{\mathcal{D}}
 \newcommand{\EE}{\mathcal{E}}
+\newcommand{\FF}{\mathcal{F}}
+\newcommand{\GG}{\mathcal{G}}
+\newcommand{\HH}{\mathcal{H}}
 \newcommand{\II}{\mathcal{I}}
+\newcommand{\JJ}{\mathcal{J}}
+\newcommand{\KK}{\mathcal{K}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\NN}{\mathcal{N}}
+\newcommand{\OO}{\mathcal{O}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\QQ}{\mathcal{Q}}
+\newcommand{\RR}{\mathcal{R}}
+\newcommand{\TT}{\mathcal{T}}
+\newcommand{\UU}{\mathcal{U}}
+\newcommand{\VV}{\mathcal{V}}
+\newcommand{\WW}{\mathcal{W}}
+\newcommand{\XX}{\mathcal{X}}
+\newcommand{\YY}{\mathcal{Y}}
+\newcommand{\ZZ}{\mathcal{Z}}
 
 % % Mathfrak
 \newcommand{\f}[1]{\mathfrak{#1}}
@@ -98,8 +134,17 @@
 \newcommand{\iso}[1][]{\cong_{#1}}
 \newcommand{\op}{^{op}}
 \newcommand{\darrow}{\downarrow}
-\newcommand{\LIM}[2]{\varprojlim_{#2}#1}
-\newcommand{\COLIM}[2]{\varinjlim_{#2}#1}
+\newcommand{\LIM}[1][{}]{\varprojlim_{#1}}
+\newcommand{\COLIM}[1][{}]{\varinjlim_{#1}}
+\newcommand{\fall}[2]{\downarrow_{#1}^{#2}}
+\newenvironment{cd}{
+    \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+}{
+    \end{tikzcd}
+    \end{figure}
+}
 
 % % Algebra
 \newcommand{\nsub}{\trianglelefteq}
@@ -114,6 +159,15 @@
 \renewcommand{\>}{\rangle}
 \renewcommand{\hat}[1]{\widehat{#1}}
 \renewcommand{\check}[1]{\widecheck{#1}}
+\newcommand{\dsum}[2]{\sum_{#1}^{#2}}
+\newcommand{\dprod}[2]{\prod_{#1}^{#2}}
+\newcommand{\del}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand\res[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  %\vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+  }}
 
 % % Galois
 \newcommand{\Gal}[2]{\mathrm{Gal}_{#1}(#2)}
@@ -121,6 +175,9 @@
 \DeclareMathOperator{\Stab}{Stab}
 \newcommand{\emb}[3]{\mathrm{Emb}_{#1}(#2, #3)}
 \newcommand{\Char}[1]{\mathrm{Char}#1}
+
+% % Number Theory
+\newcommand{\legendre}[2]{\brkt{\frac{#1}{#2}}}
 
 %% code from mathabx.sty and mathabx.dcl to get some symbols from mathabx
 \DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
@@ -226,7 +283,7 @@
     topline = false,
     bottomline = false,
     rightline = false,
-    footnoteinside = true
+    footnoteinside = false
 ]{dfn}{Definition}
 \newmdtheoremenv[
     linewidth = 2 pt,
@@ -236,7 +293,7 @@
     topline = false,
     bottomline = false,
     rightline = false,
-    footnoteinside = true
+    footnoteinside = false
 ]{prop}{Proposition}
 \newmdtheoremenv[
     linewidth = 2 pt,
@@ -246,7 +303,7 @@
     topline = false,
     bottomline = false,
     rightline = false,
-    footnoteinside = true
+    footnoteinside = false
 ]{cor}{Corollary}
 
 \theoremstyle{exercisestyle}
@@ -258,7 +315,7 @@
     topline = false,
     bottomline = false,
     rightline = false,
-    footnoteinside = true
+    footnoteinside = false
 ]{ex}{Exercise}
 
 \theoremstyle{examplestyle}
@@ -270,11 +327,22 @@
     topline = false,
     bottomline = false,
     rightline = false,
-    footnoteinside = true
+    footnoteinside = false
 ]{eg}{Example}
+\newmdtheoremenv[
+    linewidth = 0.7 pt,
+    leftmargin = 20pt,
+    rightmargin = 20pt,
+    linecolor = darkgrey,
+    topline = false,
+    bottomline = false,
+    rightline = false,
+    footnoteinside = false
+]{nttn}{Notation}
 
 \theoremstyle{remarkstyle}
 \newtheorem{rmk}{Remark}
+\newtheorem{notation}{Notation}
 
 % tikzcd
 % % Substituting symbols for arrows in tikz comm-diagrams.
@@ -287,11 +355,17 @@
 }
 
 \begin{document}
-\title{Notes on \dots}
+\title{Notes on Number Theory}
 \author{Ken Lee}
-\date{Date}
+\date{Summer 2020}
 \maketitle
 
 \tableofcontents
+
+These are notes based on Serre's ``\textit{A Course in Arithmetic}'',
+with bits added here and there from various sources like Atiyah, nlab, etc. 
+
+\section{$p$-adic Fields}
+\input{padic.tex}
 
 \end{document}
