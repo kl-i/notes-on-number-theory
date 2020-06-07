@@ -22,6 +22,10 @@
 
 % % Local Shortcuts
 \newcommand{\zmo}[2][p]{\Z/#1^{#2}\Z}
+\newcommand{\ohat}{\hat{\oplus}}
+\newcommand{\bigohat}{\hat{\bigoplus}}
+\newcommand{\dual}[1]{#1^\diamond}
+\newcommand{\rad}{\mathrm{rad }}
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -137,14 +141,6 @@
 \newcommand{\LIM}[1][{}]{\varprojlim_{#1}}
 \newcommand{\COLIM}[1][{}]{\varinjlim_{#1}}
 \newcommand{\fall}[2]{\downarrow_{#1}^{#2}}
-\newenvironment{cd}{
-    \begin{figure}[H]
-    \centering
-    \begin{tikzcd}
-}{
-    \end{tikzcd}
-    \end{figure}
-}
 
 % % Algebra
 \newcommand{\nsub}{\trianglelefteq}
@@ -178,6 +174,7 @@
 
 % % Number Theory
 \newcommand{\legendre}[2]{\brkt{\frac{#1}{#2}}}
+\newcommand{\disc}{\mathrm{disc}}
 
 %% code from mathabx.sty and mathabx.dcl to get some symbols from mathabx
 \DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
@@ -215,11 +212,12 @@
 \definecolor{darkgrey}{gray}{0.10}
 \definecolor{lightgrey}{gray}{0.30}
 \definecolor{slightgrey}{gray}{0.80}
+\definecolor{softblue}{RGB}{30,100,200}
 
 % hyperref
 \hypersetup{
       colorlinks = true,
-      linkcolor = {blue},
+      linkcolor = {softblue},
       citecolor = {blue}
 }
 
@@ -272,7 +270,9 @@
 { }% space after head
 {\thmname{#1}\thmnote{\,\,--\,\,#3}}
 
-% % Theorem environments
+% Custom Environments
+
+% % Theorems
 
 \theoremstyle{definitionstyle}
 \newmdtheoremenv[
@@ -343,6 +343,16 @@
 \theoremstyle{remarkstyle}
 \newtheorem{rmk}{Remark}
 \newtheorem{notation}{Notation}
+
+% % tikzcd diagram 
+\newenvironment{cd}{
+    \begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+}{
+    \end{tikzcd}
+    \end{figure}
+}
 
 % tikzcd
 % % Substituting symbols for arrows in tikz comm-diagrams.

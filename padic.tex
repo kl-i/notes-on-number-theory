@@ -91,8 +91,8 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   \begin{figure}[H]
     \centering
     \begin{tikzcd}
-      0 \arrow[r] & \LIM{n\in\N} p^n\Z \arrow[r] 
-      & \Z \arrow[r] & \LIM{n \in \N} \Z/p^n\Z
+      0 \arrow[r] & \LIM p^\star\Z \arrow[r] 
+      & \Z \arrow[r] & \LIM \Z/p^\star\Z
     \end{tikzcd}
   \end{figure}
   The inverse limit of $\Z/p^\star\Z$ in $\MOD[\Z]$ is still $\Z_p$. 
@@ -269,15 +269,15 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   Let $\N^\infty := \N \sqcup \set{\infty}$.
   Define $\leq$ on $\N^\infty$ as follows : 
   \begin{itemize}
-    \item For all $n, m \in \N^\infty\minus\set{\infty}$, 
+    \item[--] For all $n, m \in \N^\infty\minus\set{\infty}$, 
     $n \leq m$ is as usual. 
-    \item For all $n \in \N^\infty$, $n \leq \infty$. 
+    \item[--] For all $n \in \N^\infty$, $n \leq \infty$. 
   \end{itemize}
 
   Define $+$ on $\N$ as follows : 
   \begin{itemize}
-    \item For $n, m \in \N^\infty\minus\set{\infty}$, $n + m$ is as usual. 
-    \item For $n \in \N^\infty$, $n + \infty = \infty$. 
+    \item[--] For $n, m \in \N^\infty\minus\set{\infty}$, $n + m$ is as usual. 
+    \item[--] For $n \in \N^\infty$, $n + \infty = \infty$. 
   \end{itemize}
 \end{dfn}
 
@@ -593,10 +593,10 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   
   Let $D : \N\op \to \SET$ be a projective system 
   such that for all $n\in \N$, $D_n$ is finite and non-empty. 
-  Then $\LIM{n \in \N\op} D_n$ is nonempty. 
+  Then $\LIM D $ is nonempty. 
 \end{prop}
 \begin{proof}
-  If $D$ is a surjective system, then $\LIM{n \in \N} D_n$ is non-empty. 
+  If $D$ is a surjective system, then $\LIM D $ is non-empty. 
   We will reduce to this case. 
 
   For $n \in \N$, 
@@ -615,7 +615,7 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   = \fall{n}{n+1} E_{n+1}$. 
   Thus $E : \N\op \to \SET$ is a non-empty, surjective system that
   injects into $D$. 
-  Therefore $\nothing \neq \LIM{n\in \N\op} E_n \to \LIM{n\in\N\op} D_n$.
+  Therefore $\nothing \neq \LIM E \to \LIM D$.
 \end{proof}
 
 \begin{notation}
@@ -635,7 +635,7 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
 
   Let $0 < m$, $I \subs \Z_p[X_1,\dots,X_m]$, $I_n$ the image of $I$
   in $\Z/p^n\Z[X_1,\dots,X_m]$ for $n \in \N$. 
-  Then $\V{I} \iso \LIM{n \in \N\op} \V{I_n}$ as sets. 
+  Then $\V(I) \iso \LIM \V(I_\star)$ as sets. 
   In particular, 
   the variety defined by $I$ is non-empty if and only if 
   for all $n\in \N$, its projection mod $p^n$ is non-empty. 
@@ -643,7 +643,7 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
 \begin{proof}
   
   We first show that $\Z_p^m$ has the universal property of 
-  $\LIM{n \in \N\op} (\Z/p^n\Z)^m$. 
+  $\LIM (\Z/p^\star\Z)^m$. 
   Let $X$ be an arbitrary set. 
   We have the following chain of set-theoretic isomorphisms : 
   \begin{align*}
@@ -662,7 +662,7 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   % the projective system $(\Z/p^\star\Z)^m$, 
   % which is the same as an element in the inverse limit of $(\Z/p^\star\Z)^m$.
   % )
-  Thus $\Z_p^m \iso \LIM{n\in\N\op} (\Z/p^n\Z)^m$ in a unique way that 
+  Thus $\Z_p^m \iso \LIM (\Z/p^\star\Z)^m$ in a unique way that 
   commutes with their projections to $(\Z/p^n\Z)^m$. 
 
   For $x \in \Z_p^m$ and $f \in \Z_p[X_1,\dots,X_m]$,
@@ -674,8 +674,8 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   \]
   Therefore $f(x) = 0$ if and only if 
   for all $n\in\N$, $f_n\circ\ep_n^m(x) = 0$.
-  This shows that $\V{I} \iso \LIM{n \in \N\op} \V{I_n}$
-  under the isomorphism $\Z_p^m \iso \LIM{n\in\N\op} (\Z/p^n\Z)^m$. 
+  This shows that $\V(I) \iso \LIM \V(I_\star)$
+  under the isomorphism $\Z_p^m \iso \LIM (\Z/p^\star\Z)^m$. 
 
   The `in particular' follows from 
   \linkto{prop:inv_lim:nonempty}{inverse limit of finite, nonempty is nonempty}.
@@ -743,15 +743,15 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
   ${\fall{n}{n+1}}^m$ takes primitive zeros to primitive zeros.
   This induces the structure of a projective system for $P$,
   making it a subsystem of $\V[\Z/p^\star\Z]{I_\star}$.
-  Hence, $\LIM{n\in\N\op} P_n$ injects into $\V[\Z_p]{I}$ canonically. 
+  Hence, $\LIM P$ injects into $\V[\Z_p]{I}$ canonically. 
   We identify it with its image. 
-  Clearly, for any $x \in \LIM{n\in\N\op} P_n$, $\ep_1(x) \neq 0$. 
-  So $\LIM{n\in\N\op} P_n$ is a subset of primitive elements of $\V[\Z_p]{I}$.
+  Clearly, for any $x \in \LIM P$, $\ep_1(x) \neq 0$. 
+  So $\LIM P$ is a subset of primitive elements of $\V[\Z_p]{I}$.
   Conversely, any primitive element $x$ of $\V[\Z_p]{I}$ defines 
   a natural transformation from the singleton set $*$ as a constant functor
   to the projective system $P$,
-  i.e. an element of $\LIM{n \in \N\op} P_n$ that maps to $x$. 
-  Hence $\LIM{n\in\N\op} P_n$ is equal to 
+  i.e. an element of $\LIM P$ that maps to $x$. 
+  Hence $\LIM P$ is equal to 
   the set of primitives in $\V[\Z_p]{I}$.
 \end{proof}
 
@@ -766,6 +766,7 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
 \end{rmk}
 
 \begin{prop}[Mean Value Theorem for Polynomials]
+  \link{prop:poly:mvt}
   Let $A$ be a commutative ring, $f \in A[X]$, $a \in A$. 
   Then $f - f(a) = f'(a)(X - a)$ in $A[X]/(X-a)^2A[X]$. 
 \end{prop}
@@ -825,8 +826,10 @@ In the following section, let $p \in \Z$, $0 < p$ be a prime.
     \leq \max(\abs{f(\bar{x})}_p,\abs{f(x)_p},\abs{a_0 (\bar{x}-x)^2}_p)
     = \abs{f(x)}_p 
   \end{align*}
+  The implication followed from 
+  $\abs{\Z_p}_p = \set{1, p\inv, p^{-2}, \dots, 0}$.
   It remains to show $\abs{f'(\bar{x})}_p = \abs{f'(x)}_p$. 
-  By applying mean value theorem to $f'$, 
+  By applying \linkto{prop:poly:mvt}{mean value theorem} to $f'$, 
   we have for some $d, e \in \Z_p$, \begin{align*}
     f'(\bar{x})
     &= f'(x) + f''(x) y \abs{f'(x)}_p\abs{f(x)}_p\inv 
@@ -1127,10 +1130,10 @@ $\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$.
   we can pass the short exact sequence to the inverse limit and obtain 
   the short sequence of abelian groups : 
   \[
-    1 \to \LIM{}\U_k/\U_\star \to \U \to \U/\U_k \to 1
+    1 \to \LIM \U_k/\U_\star \to \U \to \U/\U_k \to 1
   \]
   This shows that
-  $\U_k \iso \LIM{\U_k/\U_\star} \iso \LIM{\U_k/\U_{k + \star}}$ canonically
+  $\U_k \iso \LIM \U_k/\U_\star \iso \LIM \U_k/\U_{k + \star} $ canonically
   as abelian groups.
 \end{proof}
 
@@ -1140,8 +1143,8 @@ $\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$.
   Let $n \in \N$.
   Then $U_n / U_{n+1} \iso \ker \brkt{\fall{n}{n+1}}^\times$
   canonically as abelian groups, 
-  which is in turn isomorphic to $\Z/p\Z$. 
-  Hence for $k \geq n$, 
+  which for $1 \leq n$ is in turn isomorphic to $\Z/p\Z$. 
+  Hence for $1 \leq k \geq n$, 
   $\abs{U_k /U_n} = p^{n - k}$.
 \end{prop}
 \begin{proof}
@@ -1166,7 +1169,8 @@ $\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$.
   \[1 \to 1 \to 1 \to \ker\brkt{\fall{n}{n+1}}^\times
   \to \U_n / \U_{n+1} \to 1 \to 1 \to 1 \]
   which says $U_n / U_{n+1} \iso \ker \brkt{\fall{n}{n+1}}^\times$. 
-  By counting $\brkt{\Z/p^{n+1}\Z}^\times$ and $\brkt{\Z/p^n\Z}^\times$,
+  For $1 \leq n$, 
+  by counting $\brkt{\Z/p^{n+1}\Z}^\times$ and $\brkt{\Z/p^n\Z}^\times$,
   we obtain $\abs{\ker\brkt{\fall{n}{n+1}}^\times} = p$
   and hence isomorphic to $\Z/p\Z$ since $p$ is prime. 
   To show $\abs{U_k/U_n} = p^n$ for $n \leq k$, 
@@ -1226,12 +1230,12 @@ $\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$.
   Finally, as noted before $\U_1/\U_\star$ is surjective,
   so we can pass the short exact sequence to the inverse limit. 
   \[
-    1 \to \U_1 \to \LIM{}\brkt{\V_\star \times (\U_1/\U_\star)} 
+    1 \to \U_1 \to \LIM \brkt{\V_\star \times (\U_1/\U_\star)} 
     \to \U/\U_1 \to 1
   \]
   This shows that 
-  $\U \iso \LIM{}\brkt{(\U_1/\U_\star) \times \V_\star}$ canonically.
-  Let $\V := \LIM{} \V_\star \iso \U/\U_1$. 
+  $\U \iso \LIM \brkt{(\U_1/\U_\star) \times \V_\star}$ canonically.
+  Let $\V := \LIM \V_\star \iso \U/\U_1$. 
   Then since limits commute with limits, 
   we have $\U \iso \V \times \U_1$ canonically. 
   The fact that $\ep_1^\times : \V \iso \F_p^\times$ comes from 
@@ -1362,11 +1366,11 @@ $\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$.
 
   The following are true : 
   \begin{itemize}
-    \item Let $p \neq 2$. 
+    \item[--] Let $p \neq 2$. 
     Then $\Q_p^\times \iso p^{\Z} \times \V \times \U_1$ 
     canonically as abelian groups
     where $p^\Z$, $(-1)^\Z$ are the subgroups generated $p$ and $-1$. 
-    \item Let $p = 2$.
+    \item[--] Let $p = 2$.
     Then $\Q_2^\times \iso 2^{\Z} \times (-1)^\Z \times \U_2$.
   \end{itemize}
 \end{prop}
@@ -1525,3 +1529,14 @@ $\U_n := \ker((\ep_n)^\times : \U \to \Z/p^n\Z^\times)$.
   \linkto{prop:padic:rat:unit:str}{structure of $\Q_2^\times$}. 
 
 \end{proof}
+
+\subsection{Appendix : Category-Theoretic Results Used}
+
+\begin{itemize}
+  \item[--] Category of diagrams $\CC^\II$.
+  \item[--] $\CC$ abelian category implies $\CC^\II$ abelian category. 
+  \item[--] Limits commute with limits. 
+  \item[--] Right adjoint commutes with limits. 
+  \item[--] Snake Lemma. 
+  \item[--]  
+\end{itemize}
